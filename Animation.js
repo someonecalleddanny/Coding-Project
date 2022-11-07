@@ -1,3 +1,4 @@
+//animation for the main character
 function mcAnim(mcAnim)
 {
     mcAnim.anims.create({
@@ -19,4 +20,15 @@ function mcAnim(mcAnim)
         frameRate: 10,
         repeat: -1
     });
+}
+//animation for the zombie man
+function zombie_Movement(zomAnim)
+{
+    zomAnim.anims.create({
+        key: 'move_Mate',
+        frames: zomAnim.anims.generateFrameNumbers('zombie', { start: 0, end: 4 }),
+        frameRate: 12,
+        repeat: 1
+    });
+
 }
