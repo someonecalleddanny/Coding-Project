@@ -98,10 +98,16 @@ function casting_Spells(game)
 
     function check_Keys()
     {
-        console.log("i am here");
+        //console.log("i am here");
+
+        /*if the keys aren't being pressed and the booleans are true for the number keys being pressed which was turned true in the code
+        above, these series of if statements will be activated */
+
+        /*These if statements will basically destroy the spell game objects. The appropriate boolean elements in the boolean array will
+        be set to false which will ensure that the objects can be created again when the appropriate keys are pressed */
         if((key1.isUp) && (spells_Pressed[0]))
         {
-            console.log("i am here");
+            //console.log("i am here");
             normalSpell.destroy(true);
             spells_Pressed[0] = false;
         }
@@ -124,36 +130,4 @@ function casting_Spells(game)
             spells_Pressed[3] = false;
         }   
     }
-    /*if(spells_Pressed[0])
-    {
-        if(key1.isUp)
-        {
-            normalSpell.destroy(true);
-            spells_Pressed[0] = false;
-        }
-    }
-    else if(spells_Pressed[1])
-    {
-        if(key2.isUp)
-        {
-            fire.destroy(true);
-            spells_Pressed[1] = false;
-        }
-    }
-    else if(spells_Pressed[2])
-    {
-        if(key3.isUp)
-        {
-            electric.destroy(true);
-            spells_Pressed[2] = false;
-        }
-    }
-    else if(spells_Pressed[3])
-    {
-        if(key4.isUp)
-        {
-            earth.destroy(true);
-            spells_Pressed[3] = false;
-        }   
-    }*/
 }
