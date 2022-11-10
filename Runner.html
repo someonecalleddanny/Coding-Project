@@ -11,6 +11,7 @@
     <script src = "RunningImages.js"></script>
     <script src = "PlayerMovement.js"></script>
     <script src = "Walkers.js"></script>
+    <script src = "Spells.js"></script>
     <style type="text/css">
         body {
             margin: 0;
@@ -49,6 +50,11 @@ let keyS;
 let keyD;
 let keyW;
 
+let key1;
+let key2;
+let key3;
+let key4;
+
 function preload ()
 {
     //Loads the background
@@ -59,22 +65,48 @@ function preload ()
 
     //loading in the zombie
     this.load.spritesheet("zombie" , "assets/zombie.png" , { frameWidth: 32 , frameHeight: 26});
+
+    //loading the spells
+    this.load.spritesheet("normalSpell", "assets/normal_spell.png", { frameWidth: 32 , frameHeight: 32});
+
+    this.load.spritesheet("fire", "assets/fire.png", { frameWidth: 32 , frameHeight: 32});
+
+    this.load.spritesheet("electric", "assets/electric.png", { frameWidth: 32 , frameHeight: 32});
+
+    this.load.spritesheet("earth", "assets/earth.png", { frameWidth: 32 , frameHeight: 32});
 }
 
 function create ()
 {
     createTheBackground(this)
 
-    
+    //movement keys
     keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
     keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
+    //selection of spells keys
+    key1 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
+    key2 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
+    key3 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
+    key4 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
 
     //dude
     player = this.physics.add.sprite(100, 450, 'dude');
 
+    //spells loading
+    //normalSpell = this.physics.add.sprite(300, 450, 'normalSpell');
+
+    //fire = this.physics.add.sprite(500, 450, 'fire');
+
+    //electric = this.physics.add.sprite(600, 450, 'electric');
+
+    //earth = this.physics.add.sprite(700, 450, 'earth');
+
+    //delete a sprite
+    //earth.destroy(true);
+    
     //a zombie 
     //zombie = this.physics.add.sprite(200,100,"zombie").setScale(2.5,2);
 
@@ -107,7 +139,9 @@ function create ()
     
 }
 let max_Zombies = 3;
-
+let pressed = false;
+let destroyedYet = false;
+let spells_Pressed = [false,false,false,false];
 function update ()
 {
     //move the player with wasd and cursor keys. Check the PlayerMovement.js file for more info on how this works
@@ -120,6 +154,8 @@ function update ()
     {
         zombies[i].this_Exact_Zombie.anims.play("move_Mate", true);
     }
+
+    casting_Spells(this)
     
 
     //the old moving script which is cool and complex but most likely 0.1% less efficient than the moveTheLad()
