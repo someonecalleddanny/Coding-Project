@@ -46,7 +46,10 @@ function casting_Spells(game)
         if(!spells_Pressed[0])
         {
             //adds the normal spell sprite
-            normalSpell = game.physics.add.sprite(300, 450, 'normalSpell');
+            normalSpell = game.physics.add.sprite(player.x, player.y, 'normalSpell');
+            
+            shooting_Spell(game, normalSpell);
+
             //Go to Explanation 2:
             spells_Pressed[0] = true;
         }
@@ -59,7 +62,10 @@ function casting_Spells(game)
         if(!spells_Pressed[1])
         {
             //adds the fire spell sprite
-            fire = game.physics.add.sprite(500, 450, 'fire');
+            fire = game.physics.add.sprite(player.x, player.y, 'fire');
+            
+            shooting_Spell(game, fire);
+
             //Go to Explanation 2:
             spells_Pressed[1] = true;
         }
@@ -72,7 +78,10 @@ function casting_Spells(game)
         if(!spells_Pressed[2])
         {
             //adds the electric spell sprite
-            electric = game.physics.add.sprite(600, 450, 'electric');
+            electric = game.physics.add.sprite(player.x, player.y, 'electric');
+            
+            shooting_Spell(game, electric);
+
             //Go to Explanation 2:
             spells_Pressed[2] = true;
         }
@@ -85,7 +94,10 @@ function casting_Spells(game)
         if(!spells_Pressed[3])
         {
             //adds the earth spell sprite
-            earth = game.physics.add.sprite(700, 450, 'earth');
+            earth = game.physics.add.sprite(player.x, player.y, 'earth');
+
+            shooting_Spell(game, earth);
+            
             //Go to Explanation 2:
             spells_Pressed[3] = true;
         }
@@ -94,8 +106,12 @@ function casting_Spells(game)
     /*the if statements above aren't put into else if statements due to the fact that I want the player to be able to press multiple
     at once*/
 
+    //calls the function below
+    //timedEvent = game.time.addEvent({ delay: 500, callback: shooting_Spell, callbackScope: this, loop: true });
+    
     check_Keys();
 
+    //The function being called
     function check_Keys()
     {
         //console.log("i am here");
@@ -130,4 +146,9 @@ function casting_Spells(game)
             spells_Pressed[3] = false;
         }   
     }
+}
+
+function shooting_Spell(game, spell)
+{
+    spell.setVelocityX(180);
 }

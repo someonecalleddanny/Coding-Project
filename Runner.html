@@ -94,18 +94,6 @@ function create ()
 
     //dude
     player = this.physics.add.sprite(100, 450, 'dude');
-
-    //spells loading
-    //normalSpell = this.physics.add.sprite(300, 450, 'normalSpell');
-
-    //fire = this.physics.add.sprite(500, 450, 'fire');
-
-    //electric = this.physics.add.sprite(600, 450, 'electric');
-
-    //earth = this.physics.add.sprite(700, 450, 'earth');
-
-    //delete a sprite
-    //earth.destroy(true);
     
     //a zombie 
     //zombie = this.physics.add.sprite(200,100,"zombie").setScale(2.5,2);
@@ -139,13 +127,20 @@ function create ()
     
 }
 let max_Zombies = 3;
-let pressed = false;
-let destroyedYet = false;
 let spells_Pressed = [false,false,false,false];
+let numTime = 0;
+
+function onEvent()
+{
+    console.log("hi");
+}
+
 function update ()
 {
     //move the player with wasd and cursor keys. Check the PlayerMovement.js file for more info on how this works
     moveTheLad(player); 
+
+    //console.log(player.x);
 
     //play the animation for the zombie
     //zombie.anims.play('move_Mate', true); 
@@ -155,8 +150,7 @@ function update ()
         zombies[i].this_Exact_Zombie.anims.play("move_Mate", true);
     }
 
-    casting_Spells(this)
-    
+    casting_Spells(this);
 
     //the old moving script which is cool and complex but most likely 0.1% less efficient than the moveTheLad()
     //var moveyGroovy = new imNotSeeingEnoughMovement(player);
