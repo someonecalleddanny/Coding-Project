@@ -10,8 +10,8 @@
     <script src = "Animation.js"></script>
     <script src = "RunningImages.js"></script>
     <script src = "PlayerMovement.js"></script>
-    <script src = "Walkers.js"></script>
     <script src = "Spells.js"></script>
+    <script src = "Walkers.js"></script>
     <style type="text/css">
         body {
             margin: 0;
@@ -106,11 +106,12 @@ function create ()
     }
     
     let start_x = 200;
-    let start_y = 100;
+    let start_y = 400;
     //adding a sprite for each zombie
     for(let i = 0 ; i < zombies.length; i++)
     {
         zombies[i].current_x = start_x;
+        zombies[i].current_y = start_y;
         //adds a sprite for each instance of the zombie
         zombies[i].this_Exact_Zombie = this.physics.add.sprite(zombies[i].current_x ,zombies[i].current_y ,"zombie").setScale(2.5,2);
         start_x += 90;
@@ -137,12 +138,13 @@ function update ()
 
     //console.log(player.x);
 
-    //play the animation for the zombie
-    //zombie.anims.play('move_Mate', true); 
-    //this will make all the animations for all the zombies come to life
     for(let i = 0; i < zombies.length ; i++)
     {
+        //play the animation for the zombie
         zombies[i].this_Exact_Zombie.anims.play("move_Mate", true);
+
+        //this function checks if the spell collides with the correct zombie to lose health as well as other things
+        zombies[i].lose_Health(this.physics)
     }
 
     casting_Spells(this);
