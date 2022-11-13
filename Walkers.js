@@ -3,7 +3,8 @@ class zombie_Man
     current_x = 200;
     current_y = 100;
     this_Exact_Zombie;
-    health = 10;
+    health = 6;
+    dead = false;
     constructor()
     {
         
@@ -31,24 +32,37 @@ class zombie_Man
             game.add.collider(this.this_Exact_Zombie, mySpells.basicSpell.entity);
             mySpells.basicSpell.entity.destroy(true);
             console.log("hello");
+            this.health -= mySpells.basicSpell.damage;
+            console.log(this.health);
         }
         if(spells_Pressed[1] && game.overlap(this.this_Exact_Zombie, mySpells.fireSpell.entity))
         {
             game.add.collider(this.this_Exact_Zombie, mySpells.fireSpell.entity);
             mySpells.fireSpell.entity.destroy(true);
             console.log("hello");
+            this.health -= mySpells.fireSpell.damage;
+            console.log(this.health);
         }
         if(spells_Pressed[2] && game.overlap(this.this_Exact_Zombie, mySpells.electricSpell.entity))
         {
             game.add.collider(this.this_Exact_Zombie, mySpells.electricSpell.entity);
             mySpells.electricSpell.entity.destroy(true);
             console.log("hello");
+            this.health -= mySpells.electricSpell.damage;
+            console.log(this.health);
         }
         if(spells_Pressed[3] && game.overlap(this.this_Exact_Zombie, mySpells.earthSpell.entity))
         {
             game.add.collider(this.this_Exact_Zombie, mySpells.earthSpell.entity);
             mySpells.earthSpell.entity.destroy(true);
             console.log("hello");
+            this.health -= mySpells.earthSpell.damage;
+            console.log(this.health);
+        }
+
+        if(this.health < 1)
+        {
+            this.dead = true;
         }
 
     }
