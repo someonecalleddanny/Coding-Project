@@ -5,30 +5,55 @@ class Spells
 
     }
 
-    basicSpell()
+    basicSpell = 
     {
-
+        entity : "placement",
+        created : false,
+        damage : 1,
+        speed : 180,
+        manaCost : 5
     }
 
-    fireSpell()
+    fireSpell = 
     {
-
+        entity : "placement",
+        created : false,
+        damage : 2,
+        speed : 100,
+        manaCost : 10
     }
 
-    electricSpell()
+    electricSpell = 
     {
-
+        entity : "placement",
+        created : false,
+        damage : 3,
+        speed : 300
     }
 
-    earthSpell()
+    earthSpell = 
     {
-
+        entity : "placement",
+        created : false,
+        damage : 2,
+        speed : 90
     }
 }
 
+//this is a global variable to be used in remembering the last direction moved it is used right below
+var holdingDirection = "right";
+
 function casting_Spells(game)
 {
-        //Explanation 1:
+    /*This if statement reads the direction moving in the PlayerMovement script which returns a specific string
+    such as "up". This if statement keeps updating the current direction that the player is moving. If the player is not moving,
+    It will not read the returned "notMoving" string. This is used for firing a spell when the player has stopped moving. */
+    if(direction_Moving() != "notMoving")
+    {
+        holdingDirection = direction_Moving();
+    }
+
+    //Explanation 1:
         /*I have to wrap the creation of a spell sprite in an array of booleans due to the fact that phaser and JS have different
         ways of destroying an object. From my understanding, new references are made each time a new spell game object is created.
         Then, when I try to destroy that object, it leaves a silent error when the update function goes onto its next cycle. By
@@ -46,9 +71,9 @@ function casting_Spells(game)
         if(!spells_Pressed[0])
         {
             //adds the normal spell sprite
-            normalSpell = game.physics.add.sprite(player.x, player.y, 'normalSpell');
-            
-            shooting_Spell(game, normalSpell);
+            mySpells.basicSpell.entity = game.physics.add.sprite(player.x, player.y, 'normalSpell');
+            mySpells.basicSpell.created = true;
+            shooting_Spell(mySpells.basicSpell.speed, mySpells.basicSpell.entity);
 
             //Go to Explanation 2:
             spells_Pressed[0] = true;
@@ -62,9 +87,9 @@ function casting_Spells(game)
         if(!spells_Pressed[1])
         {
             //adds the fire spell sprite
-            fire = game.physics.add.sprite(player.x, player.y, 'fire');
-            
-            shooting_Spell(game, fire);
+            mySpells.fireSpell.entity = game.physics.add.sprite(player.x, player.y, 'fire');
+            mySpells.fireSpell.created = true;
+            shooting_Spell(mySpells.fireSpell.speed,  mySpells.fireSpell.entity);
 
             //Go to Explanation 2:
             spells_Pressed[1] = true;
@@ -78,9 +103,9 @@ function casting_Spells(game)
         if(!spells_Pressed[2])
         {
             //adds the electric spell sprite
-            electric = game.physics.add.sprite(player.x, player.y, 'electric');
-            
-            shooting_Spell(game, electric);
+            mySpells.electricSpell.entity = game.physics.add.sprite(player.x, player.y, 'electric');
+            mySpells.fireSpell.created = true;
+            shooting_Spell(mySpells.electricSpell.speed, mySpells.electricSpell.entity);
 
             //Go to Explanation 2:
             spells_Pressed[2] = true;
@@ -94,9 +119,9 @@ function casting_Spells(game)
         if(!spells_Pressed[3])
         {
             //adds the earth spell sprite
-            earth = game.physics.add.sprite(player.x, player.y, 'earth');
-
-            shooting_Spell(game, earth);
+            mySpells.earthSpell.entity = game.physics.add.sprite(player.x, player.y, 'earth');
+            mySpells.earthSpell.created = true;
+            shooting_Spell(mySpells.earthSpell.speed, mySpells.earthSpell.entity);
             
             //Go to Explanation 2:
             spells_Pressed[3] = true;
@@ -124,31 +149,94 @@ function casting_Spells(game)
         if((key1.isUp) && (spells_Pressed[0]))
         {
             //console.log("i am here");
-            normalSpell.destroy(true);
+            mySpells.basicSpell.entity.destroy(true);
+            mySpells.basicSpell.created = false;
             spells_Pressed[0] = false;
         }
 
         if((key2.isUp) && (spells_Pressed[1]))
         {
-            fire.destroy(true);
+            mySpells.fireSpell.entity.destroy(true);
+            mySpells.fireSpell.created = false;
             spells_Pressed[1] = false;
         }
 
         if((key3.isUp) && (spells_Pressed[2]))
         {
-            electric.destroy(true);
+            mySpells.electricSpell.entity.destroy(true);
+            mySpells.electricSpell.created = false;
             spells_Pressed[2] = false;
         }
 
         if((key4.isUp) && (spells_Pressed[3]))
         {
-            earth.destroy(true);
+            mySpells.earthSpell.entity.destroy(true);
+            mySpells.earthSpell.created = false;
             spells_Pressed[3] = false;
         }   
     }
 }
 
-function shooting_Spell(game, spell)
-{
-    spell.setVelocityX(180);
+function shooting_Spell(desired_Speed, spell)
+{   
+    //This is similar to the movement script for the main character
+    switch(direction_Moving())
+    {
+        case "right":
+            spell.setVelocityX(desired_Speed);
+            diagonalShooting()
+            break;
+        case "left":
+            spell.setVelocityX(-desired_Speed);
+            diagonalShooting()
+            break;
+        case "up":
+            spell.setVelocityY(-desired_Speed);
+            diagonalShooting()
+            break;
+        case "down":
+            spell.setVelocityY(desired_Speed);
+            diagonalShooting()
+            break;
+        default:
+            switch(holdingDirection)
+            {
+                case "right":
+                    spell.setVelocityX(desired_Speed);
+                    diagonalShooting()
+                    break;
+                case "left":
+                    spell.setVelocityX(-desired_Speed);
+                    diagonalShooting()
+                    break;
+                case "up":
+                    spell.setVelocityY(-desired_Speed);
+                    diagonalShooting()
+                    break;
+                case "down":
+                    spell.setVelocityY(desired_Speed);
+                    diagonalShooting()
+                    break;
+            }
+    }
+
+    /*this function is similar to the "diagonalMovement" function in the "PlayerMovement" script. The difference is that it will get
+    the number from the global variable in there. 1 means moving diagonally up. 2 means diagonally down. 0 means no diagonal.*/
+    function diagonalShooting()
+    {
+        //see the currentDiagonal variable in the PlayerMovement script
+        if(currentDiagonal == 1)
+        {
+            spell.setVelocityY(-desired_Speed);
+        }
+        else if(currentDiagonal == 2)
+        {
+            spell.setVelocityY(desired_Speed);
+        }
+        else
+        {
+            spell.setVelocityY(0);
+        }
+    }
+    
 }

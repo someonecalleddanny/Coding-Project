@@ -2,9 +2,14 @@
 let xMovement = 80;
 let yMovement = 80;
 
+//global variables to check if a player is moving diagonally
+let currentDiagonal = 0;
+
+
 function moveTheLad(player)
         {    
-                   
+            /*I used a switch statement here due to the fact that it is more readable and there being a repeated data type being checked
+            . This most likely will have a gain in efficency but this is JavaScript not C++.*/  
             if(!check_For_Opposite_Buttons(player))
             {
                 switch(direction_Moving())
@@ -49,17 +54,22 @@ function moveTheLad(player)
 
             function diagonalMovement()
             {
+                //checks if the player is moving up
                 if(cursors.up.isDown || keyW.isDown)
                 {
                     player.setVelocityY(-yMovement);
-                    check_For_Opposite_Buttons(player)
+                    currentDiagonal = 1;
                 }
+                //checks if the player is moving down
                 else if(cursors.down.isDown || keyS.isDown)
                 {
                     player.setVelocityY(yMovement);
+                    currentDiagonal = 2;
                 }
+                //checks if the player isn't moving diagonally at all
                 else
                 {
+                    currentDiagonal = 0;
                     player.setVelocityY(0);
                 }
             }
@@ -88,14 +98,19 @@ function moveTheLad(player)
             {
                 return "down";
             }
-            if ((cursors.up.isDown || keyW.isDown) && player.body.touching.down)
+            else
+            {
+                return "notMoving"
+            }
+            /*if ((cursors.up.isDown || keyW.isDown) && player.body.touching.down)
             {
                 return "weirdThing"
-            }
+            }*/
         }
 
         function check_For_Opposite_Buttons(player)
         {
+            //This checks if the opposite keys are pressed to eliminate glitchy movement
             if((cursors.left.isDown || keyA.isDown) && (cursors.right.isDown || keyD.isDown))
             {
                 player.setVelocityX(0);
