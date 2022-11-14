@@ -12,6 +12,7 @@
     <script src = "PlayerMovement.js"></script>
     <script src = "Spells.js"></script>
     <script src = "Walkers.js"></script>
+    <script src = "GameManager.js"></script>
     <style type="text/css">
         body {
             margin: 0;
@@ -54,6 +55,8 @@ let key1;
 let key2;
 let key3;
 let key4;
+
+let myGameManager = new GameManager();
 
 function preload ()
 {
@@ -116,53 +119,8 @@ function update ()
     //move the player with wasd and cursor keys. Check the PlayerMovement.js file for more info on how this works
     moveTheLad(player); 
 
-    if(all_Zombies_Dead)
-    {
-        //creating zombies
-        for(let i = 0; i < max_Zombies ; i++)
-        {
-            let placement_Zombie = new zombie_Man();
-            zombies.push(placement_Zombie);
-        }
-        
-        let start_x = 200;
-        let start_y = 400;
-        //adding a sprite for each zombie
-        for(let i = 0 ; i < zombies.length; i++)
-        {
-            zombies[i].current_x = start_x;
-            zombies[i].current_y = start_y;
-            //adds a sprite for each instance of the zombie
-            zombies[i].this_Exact_Zombie = this.physics.add.sprite(zombies[i].current_x ,zombies[i].current_y ,"zombie").setScale(2.5,2);
-            start_x += 90;
-        }
-        all_Zombies_Dead = false;
-        alive_Zombies = max_Zombies;
-    }
-    else
-    {
-        for(let i = 0; i < zombies.length ; i++)
-        {
-            //play the animation for the zombie
-            zombies[i].this_Exact_Zombie.anims.play("move_Mate", true);
-
-            //this function checks if the spell collides with the correct zombie to lose health as well as other things
-            zombies[i].lose_Health(this.physics)
-
-            if(zombies[i].dead)
-            {
-                zombies[i].this_Exact_Zombie.destroy(true);
-                zombies.splice(i,1);
-            }
-        }
-        alive_Zombies = zombies.length;
-        //console.log(alive_Zombies);
-        if(alive_Zombies == 0)
-        {
-            //console.log("hello");
-            all_Zombies_Dead = true;
-        }
-    }
+    //checks if the zombies are dead to respawn them.
+    myGameManager.spawning_And_Killing_Zombos(this.physics);
 
     //console.log(player.x);
 
