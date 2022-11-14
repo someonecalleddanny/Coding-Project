@@ -45,6 +45,7 @@ var holdingDirection = "right";
 
 function casting_Spells(game)
 {
+
     /*This if statement reads the direction moving in the PlayerMovement script which returns a specific string
     such as "up". This if statement keeps updating the current direction that the player is moving. If the player is not moving,
     It will not read the returned "notMoving" string. This is used for firing a spell when the player has stopped moving. */
@@ -135,7 +136,13 @@ function casting_Spells(game)
     //timedEvent = game.time.addEvent({ delay: 500, callback: shooting_Spell, callbackScope: this, loop: true });
     
     check_Keys();
-
+    function destroySpell(spell, index)
+    {
+        console.log(spell);
+        spell.entity.destroy(true);
+        spell.created = false;
+        spells_Pressed[index] = false
+    }
     //The function being called
     function check_Keys()
     {
@@ -148,6 +155,7 @@ function casting_Spells(game)
         be set to false which will ensure that the objects can be created again when the appropriate keys are pressed */
         if((key1.isUp) && (spells_Pressed[0]))
         {
+            //setTimeout(destroySpell, 1000, mySpells.basicSpell, 0);
             //console.log("i am here");
             mySpells.basicSpell.entity.destroy(true);
             mySpells.basicSpell.created = false;
