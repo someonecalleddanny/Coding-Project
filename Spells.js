@@ -1,3 +1,4 @@
+// Spells
 class Spells
 {
     constructor()
