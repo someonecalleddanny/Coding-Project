@@ -61,22 +61,7 @@ let myGameManager = new GameManager();
 function preload ()
 {
     //Loads the background
-    preLoadTheBackground(this)
-
-    //using the dude from the demo because he is cute/cool looking
-    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-
-    //loading in the zombie
-    this.load.spritesheet("zombie" , "assets/zombie.png" , { frameWidth: 32 , frameHeight: 26});
-
-    //loading the spells
-    this.load.spritesheet("normalSpell", "assets/normal_spell.png", { frameWidth: 32 , frameHeight: 32});
-
-    this.load.spritesheet("fire", "assets/fire.png", { frameWidth: 32 , frameHeight: 32});
-
-    this.load.spritesheet("electric", "assets/electric.png", { frameWidth: 32 , frameHeight: 32});
-
-    this.load.spritesheet("earth", "assets/earth.png", { frameWidth: 32 , frameHeight: 32});
+    preLoadAllStuff(this)
 }
 
 function create ()
@@ -97,6 +82,11 @@ function create ()
 
     //dude
     player = this.physics.add.sprite(100, 450, 'dude');
+
+    basic_Zombo = this.physics.add.sprite(100 ,200 ,"basiczombie").setScale(2.5,2);
+    fire_Zombo = this.physics.add.sprite(200 ,200 ,"firezombie").setScale(2.5,2);
+    electric_Zombo = this.physics.add.sprite(300 ,200 ,"electriczombie").setScale(2.5,2);
+    earth_Zombo = this.physics.add.sprite(400 ,200 ,"earthzombie").setScale(2.5,2);
     
     //create the animation for the playable character
     mcAnim(this);
@@ -122,7 +112,10 @@ function update ()
     //checks if the zombies are dead to respawn them.
     myGameManager.spawning_And_Killing_Zombos(this.physics);
 
-    //console.log(player.x);
+    basic_Zombo.anims.play('move_Basic_Mate', true); 
+    fire_Zombo.anims.play('move_Fire_Mate', true); 
+    electric_Zombo.anims.play('move_Electric_Mate', true);
+    earth_Zombo.anims.play('move_Earth_Mate', true);
 
     
 

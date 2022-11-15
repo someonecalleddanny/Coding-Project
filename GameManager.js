@@ -7,7 +7,9 @@ class GameManager
         //creating zombies
         for(let i = 0; i < max_Zombies ; i++)
         {
+            //instantiating the class within Walkers.js
             let placement_Zombie = new zombie_Man();
+            //push the class into the zombies array
             zombies.push(placement_Zombie);
         }
         
@@ -16,6 +18,7 @@ class GameManager
         //adding a sprite for each zombie
         for(let i = 0 ; i < zombies.length; i++)
         {
+            //setting the x and y coordinates for each zombies
             zombies[i].current_x = start_x;
             zombies[i].current_y = start_y;
             //adds a sprite for each instance of the zombie
@@ -30,6 +33,7 @@ class GameManager
         for(let i = 0; i < zombies.length ; i++)
         {
             //play the animation for the zombie
+            //the zombies variable is an array of the class within Walkers.js
             zombies[i].this_Exact_Zombie.anims.play("move_Mate", true);
 
             //this function checks if the spell collides with the correct zombie to lose health as well as other things

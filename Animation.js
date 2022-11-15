@@ -31,4 +31,29 @@ function zombie_Movement(zomAnim)
         repeat: 1
     });
 
+    zomAnim.anims.create({
+        key: 'move_Basic_Mate',
+        frames: zomAnim.anims.generateFrameNumbers('basiczombie', { start: 0, end: 4 }),
+        frameRate: 12,
+        repeat: 1
+    });
+    zomAnim.anims.create({
+        key: 'move_Fire_Mate',
+        frames: zomAnim.anims.generateFrameNumbers('firezombie', { start: 0, end: 4 }),
+        frameRate: 12,
+        repeat: 1
+    });
+    zomAnim.anims.create({
+        key: 'move_Electric_Mate',
+        frames: zomAnim.anims.generateFrameNumbers('electriczombie', { start: 0, end: 4 }),
+        frameRate: 12,
+        repeat: 1
+    });
+    zomAnim.anims.create({
+        key: 'move_Earth_Mate',
+        frames: zomAnim.anims.generateFrameNumbers('earthzombie', { start: 0, end: 4 }),
+        frameRate: 12,
+        repeat: 1
+    });
+
 }

@@ -136,13 +136,6 @@ function casting_Spells(game)
     //timedEvent = game.time.addEvent({ delay: 500, callback: shooting_Spell, callbackScope: this, loop: true });
     
     check_Keys();
-    function destroySpell(spell, index)
-    {
-        console.log(spell);
-        spell.entity.destroy(true);
-        spell.created = false;
-        spells_Pressed[index] = false
-    }
     //The function being called
     function check_Keys()
     {
@@ -152,11 +145,12 @@ function casting_Spells(game)
         above, these series of if statements will be activated */
 
         /*These if statements will basically destroy the spell game objects. The appropriate boolean elements in the boolean array will
-        be set to false which will ensure that the objects can be created again when the appropriate keys are pressed */
+        be set to false which will ensure that the objects can be created again when the appropriate keys are pressed.
+        Also, this ensures that the spells that aren't being pressed actually have a sprite value as the player can
+        have the keys up at any point in the game but not necessarily wanting to shoot the spell. This will stop the referencing issues
+        from happening. */
         if((key1.isUp) && (spells_Pressed[0]))
         {
-            //setTimeout(destroySpell, 1000, mySpells.basicSpell, 0);
-            //console.log("i am here");
             mySpells.basicSpell.entity.destroy(true);
             mySpells.basicSpell.created = false;
             spells_Pressed[0] = false;
