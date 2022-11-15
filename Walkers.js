@@ -2,12 +2,23 @@ class zombie_Man
 {
     current_x = 200;
     current_y = 100;
+
     this_Exact_Zombie;
+    spriteName;
+    animationName;
+    resistance;
+    
+
     health = 6;
     dead = false;
     constructor()
     {
         
+    }
+
+    type_Of_Zombie()
+    {
+
     }
 
     running_Towards_Player(player_X, player_Y)
