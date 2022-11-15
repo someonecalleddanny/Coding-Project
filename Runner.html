@@ -82,11 +82,6 @@ function create ()
 
     //dude
     player = this.physics.add.sprite(100, 450, 'dude');
-
-    basic_Zombo = this.physics.add.sprite(100 ,200 ,"basiczombie").setScale(2.5,2);
-    fire_Zombo = this.physics.add.sprite(200 ,200 ,"firezombie").setScale(2.5,2);
-    electric_Zombo = this.physics.add.sprite(300 ,200 ,"electriczombie").setScale(2.5,2);
-    earth_Zombo = this.physics.add.sprite(400 ,200 ,"earthzombie").setScale(2.5,2);
     
     //create the animation for the playable character
     mcAnim(this);
@@ -98,9 +93,6 @@ function create ()
     cursors = this.input.keyboard.createCursorKeys();
     
 }
-let all_Zombies_Dead = true;
-let max_Zombies = 3;
-let alive_Zombies;
 let spells_Pressed = [false,false,false,false];
 let mySpells = new Spells();
 
@@ -110,12 +102,7 @@ function update ()
     moveTheLad(player); 
 
     //checks if the zombies are dead to respawn them.
-    myGameManager.spawning_And_Killing_Zombos(this.physics);
-
-    basic_Zombo.anims.play('move_Basic_Mate', true); 
-    fire_Zombo.anims.play('move_Fire_Mate', true); 
-    electric_Zombo.anims.play('move_Electric_Mate', true);
-    earth_Zombo.anims.play('move_Earth_Mate', true);
+    myGameManager.spawning_And_Killing_Zombos(this.physics, Phaser.Math.RND);
 
     
 

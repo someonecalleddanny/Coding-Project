@@ -7,6 +7,7 @@ class zombie_Man
     spriteName;
     animationName;
     resistance;
+    speed;
     
 
     health = 6;
@@ -16,8 +17,53 @@ class zombie_Man
         
     }
 
-    type_Of_Zombie()
+    type_Of_Zombie(picking_Zombie)
     {
+        switch(picking_Zombie)
+        {
+            //this will be the normal zombie with no resistances
+            case 0:
+                this.spriteName = "zombie";
+                this.animationName = "move_Mate";
+                this.resistance = 0;
+                break;
+            case 1:
+                this.spriteName = "basiczombie";
+                this.animationName = "move_Basic_Mate";
+                this.resistance = 1;
+                break;
+            case 2:
+                this.spriteName = "firezombie";
+                this.animationName = "move_Fire_Mate";
+                this.resistance = 2;
+                break;
+            case 3:
+                this.spriteName = "electriczombie";
+                this.animationName = "move_Electric_Mate";
+                this.resistance = 4;
+                break;
+            case 4:
+                this.spriteName = "earthzombie";
+                this.animationName = "move_Earth_Mate";
+                this.resistance = 8;
+                break;
+            default:
+                console.log("ERROR: INPUTTED WRONG NUMBER TO PICK ZOMBIE. PICK NUMBER FROM 1-4");
+        }
+    }
+
+    resisting_Attack(spell_hit)
+    {
+        /*for future reference: i am using bit flags. It goes like this. 1 = basic spell, 2 = fire spell, 4 = electric spell
+        , 8 = earth spell*/
+        if(spell_hit & resistance)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
 
     }
 
