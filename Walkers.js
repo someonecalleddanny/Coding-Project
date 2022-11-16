@@ -6,42 +6,46 @@ class zombie_Man
     this_Exact_Zombie;
     spriteName;
     animationName;
+    hit_With_Stuff = [];
     resistance;
     speed;
+    isHit = false;
     
 
     health = 6;
     dead = false;
-    constructor()
-    {
-        
-    }
 
     type_Of_Zombie(picking_Zombie)
     {
         switch(picking_Zombie)
         {
+            //The specific zombie will be made with the appropriate animation and sprite names among other things
+
             //this will be the normal zombie with no resistances
             case 0:
                 this.spriteName = "zombie";
                 this.animationName = "move_Mate";
                 this.resistance = 0;
                 break;
+            //this is the basic zombie that resists the basic spell
             case 1:
                 this.spriteName = "basiczombie";
                 this.animationName = "move_Basic_Mate";
                 this.resistance = 1;
                 break;
+            //this is the fire zombie that resists the fire spell
             case 2:
                 this.spriteName = "firezombie";
                 this.animationName = "move_Fire_Mate";
                 this.resistance = 2;
                 break;
+            //this is the electric zombie that will resist the electric spell
             case 3:
                 this.spriteName = "electriczombie";
                 this.animationName = "move_Electric_Mate";
                 this.resistance = 4;
                 break;
+            //this is the earth zombie that will resist earth spells
             case 4:
                 this.spriteName = "earthzombie";
                 this.animationName = "move_Earth_Mate";
@@ -56,7 +60,10 @@ class zombie_Man
     {
         /*for future reference: i am using bit flags. It goes like this. 1 = basic spell, 2 = fire spell, 4 = electric spell
         , 8 = earth spell*/
-        if(spell_hit & resistance)
+        /*Currently in future, it works. If the specific instance of a zombie is the basic zombie (which has the resistance value of 1),
+        the binary value will be and gated with the spell that is hit on the zombie. 1 = 0001, if and gated, it will return a value 
+        of 1 with anything that has a 1. Thus, it will return true or, if not, it will return false. */
+        if(spell_hit & this.resistance)
         {
             return true;
         }
@@ -79,44 +86,52 @@ class zombie_Man
         //if not hit player == return false;
     }
 
-    lose_Health(game)
+    colliding_With_Something(game)
     {
-        
-        //this.this_Exact_Zombie.setVelocityX(-50).setBounce(1,1);
-        //mySpells.basicSpell.entity.destroy(true);
-        if(spells_Pressed[0] && game.overlap(this.this_Exact_Zombie, mySpells.basicSpell.entity))
+        if(game.overlap(this.this_Exact_Zombie, mySpells.basicSpell.entity))
         {
+            console.log("jello");
             game.add.collider(this.this_Exact_Zombie, mySpells.basicSpell.entity);
-            mySpells.basicSpell.entity.destroy(true);
-            console.log("hello");
-            this.health -= mySpells.basicSpell.damage;
-            console.log(this.health);
+            this.hit_With_Stuff.push(1);
         }
-        if(spells_Pressed[1] && game.overlap(this.this_Exact_Zombie, mySpells.fireSpell.entity))
+        if(game.overlap(this.this_Exact_Zombie, mySpells.fireSpell.entity))
         {
+            console.log("hello");
             game.add.collider(this.this_Exact_Zombie, mySpells.fireSpell.entity);
-            mySpells.fireSpell.entity.destroy(true);
-            console.log("hello");
-            this.health -= mySpells.fireSpell.damage;
-            console.log(this.health);
-        }
-        if(spells_Pressed[2] && game.overlap(this.this_Exact_Zombie, mySpells.electricSpell.entity))
-        {
-            game.add.collider(this.this_Exact_Zombie, mySpells.electricSpell.entity);
-            mySpells.electricSpell.entity.destroy(true);
-            console.log("hello");
-            this.health -= mySpells.electricSpell.damage;
-            console.log(this.health);
-        }
-        if(spells_Pressed[3] && game.overlap(this.this_Exact_Zombie, mySpells.earthSpell.entity))
-        {
-            game.add.collider(this.this_Exact_Zombie, mySpells.earthSpell.entity);
-            mySpells.earthSpell.entity.destroy(true);
-            console.log("hello");
-            this.health -= mySpells.earthSpell.damage;
-            console.log(this.health);
+            this.hit_With_Stuff.push(2);
         }
 
+        if(game.overlap(this.this_Exact_Zombie, mySpells.electricSpell.entity))
+        {
+            game.add.collider(this.this_Exact_Zombie, mySpells.electricSpell.entity);
+            console.log("hello");
+            this.hit_With_Stuff.push(4);
+        }
+
+        if(game.overlap(this.this_Exact_Zombie, mySpells.earthSpell.entity))
+        {
+            game.add.collider(this.this_Exact_Zombie, mySpells.earthSpell.entity);
+            console.log("hello");
+            this.hit_With_Stuff.push(8);
+        }
+    }
+
+    lose_Health()
+    {
+        for(let i = 0; i < this.hit_With_Stuff.length ; i++)
+        {
+            if(!this.resisting_Attack(this.hit_With_Stuff[i]))
+            {
+                this.health -= mySpells.basicSpell.damage;
+                console.log(this.health);
+            }
+            else
+            {
+                console.log("resisted attack")
+            }
+        }
+        this.hit_With_Stuff = [];
+        
         if(this.health < 1)
         {
             this.dead = true;

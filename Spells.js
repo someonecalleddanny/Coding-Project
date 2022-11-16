@@ -1,6 +1,9 @@
 // Spells
 class Spells
 {
+    /*This needs to be Updated if I add more spells (need to have all same numbers): current spells = 4, GameManager = 4 booleans for 
+    spells to destroy
+    */
     constructor()
     {
 
