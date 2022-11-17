@@ -74,9 +74,10 @@ class zombie_Man
 
     }
 
-    running_Towards_Player(player_X, player_Y)
+    running_Towards_Player(player, physics)
     {
-        
+        physics.moveTo(this.this_Exact_Zombie, player.x, player.y);
+        //this.this_Exact_Zombie.setVelocity(player.x,player.y);
     }
 
     hit_Player()

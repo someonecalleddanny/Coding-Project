@@ -12,6 +12,8 @@
     <script src = "PlayerMovement.js"></script>
     <script src = "Spells.js"></script>
     <script src = "Walkers.js"></script>
+    <script src = "MainCharacter.js"></script>
+    <script src = "GameManagerFunctions.js"></script>
     <script src = "GameManager.js"></script>
     <style type="text/css">
         body {
@@ -57,6 +59,7 @@ let key3;
 let key4;
 
 let myGameManager = new GameManager();
+let myMainMan = new MainMan();
 
 function preload ()
 {
@@ -104,7 +107,10 @@ function update ()
     //checks if the zombies are dead to respawn them.
     myGameManager.spawning_And_Killing_Zombos(this.physics, Phaser.Math.RND);
 
-    
+    if(!myGameManager.managingZombies.all_Zombies_Dead)
+    {
+        myGameManager.zombie_Stuff(this.physics);
+    }
 
     casting_Spells(this);
 
