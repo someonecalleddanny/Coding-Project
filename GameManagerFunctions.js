@@ -60,20 +60,43 @@ function deleting_Unwanted_Spells(myManager)
 
 function cant_Overlap_With_Each_Other(myZombie, physics)
 {
-    /*for(let i = 0 ; i < myZombie.length-1 ; i++)
+    for(let i = 0 ; i < myZombie.length - 1 ; i++)
     {
+        let minXBound_Zom1 = myZombie[i].this_Exact_Zombie.x - 20;
+        let maxXBound_Zom1 = myZombie[i].this_Exact_Zombie.x + 20;
+        let minYBound_Zom1 = myZombie[i].this_Exact_Zombie.y + 20;
+        let maxYBound_Zom1 = myZombie[i].this_Exact_Zombie.y - 20;
         for(let y = i + 1 ; y < myZombie.length; y++)
         {
-            if(physics.collide(myZombie[i].this_Exact_Zombie,  myZombie[y].this_Exact_Zombie))
+            let minXBound_Zom2 = myZombie[y].this_Exact_Zombie.x - 16;
+            let maxXBound_Zom2 = myZombie[y].this_Exact_Zombie.x + 16;
+            let minYBound_Zom2 = myZombie[y].this_Exact_Zombie.y + 16;
+            let maxYBound_Zom2 = myZombie[y].this_Exact_Zombie.y - 16;
+
+            /*minXBound_Zom1 <= myZombie[y].this_Exact_Zombie.x && maxXBound_Zom1 >= myZombie[y].this_Exact_Zombie.x  &&
+                minYBound_Zom1 >= myZombie[y].this_Exact_Zombie.y && maxYBound_Zom1 <= myZombie[y].this_Exact_Zombie.y*/
+            //collision does't work for dynamic objects for some reason so this is why im doing my collison manually
+            //!physics.collide(myZombie[i].this_Exact_Zombie,  myZombie[y].this_Exact_Zombie) = if worked properly
+            //32x32 /2 = 16x center 16y center
+            if(!(physics.overlap(myZombie[i].this_Exact_Zombie,  myZombie[y].this_Exact_Zombie)))
             {
-                myZombie[y].this_Exact_Zombie.setBounce(10, 10);
+                console.log("im moving");
+                //myZombie[y].this_Exact_Zombie.setBounce(10, 10);
                 physics.add.collider(myZombie[i].this_Exact_Zombie, myZombie[y].this_Exact_Zombie);
+                myZombie[i].running_Towards_Player(player, physics);
+                myZombie[y].running_Towards_Player(player, physics);
+                
             }
-            
+            else
+            {
+                console.log("not moving");
+                //physics.add.collider(myZombie[i].this_Exact_Zombie, myZombie[y].this_Exact_Zombie);
+            }
         }
-    }*/
-    physics.add.collider(myZombie[1].this_Exact_Zombie, myZombie[2].this_Exact_Zombie);
-    /*physics.add.collider(myZombie[0].this_Exact_Zombie, myZombie[0].this_Exact_Zombie);
+    }
+    /*physics.add.collider(myZombie[1].this_Exact_Zombie, myZombie[2].this_Exact_Zombie);
+    physics.add.collider(myZombie[0].this_Exact_Zombie, myZombie[1].this_Exact_Zombie);
+    physics.add.collider(myZombie[0].this_Exact_Zombie, myZombie[0].this_Exact_Zombie);
     physics.add.collider(myZombie[0].this_Exact_Zombie, myZombie[1].this_Exact_Zombie);
     physics.add.collider(myZombie[0].this_Exact_Zombie, myZombie[2].this_Exact_Zombie);*/
    
