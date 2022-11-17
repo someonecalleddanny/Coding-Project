@@ -88,10 +88,15 @@ class zombie_Man
 
     colliding_With_Something(game)
     {
+        /*These if statements check if a specific entity overlaps with the zombie. Currently, this holds only spells. If this is
+        updated hopefully I don't forget to update this explanation. Basically, the if statements will also push a denary value
+        to represent a bit value in order to accomplish a bit flag. e.g if fire zombie has a resistance of 2, 2 & 2 returns true as
+        it is true a 1 will be passed through. The and gate is not stored here but in the "resisting_Attack" method.*/
         if(game.overlap(this.this_Exact_Zombie, mySpells.basicSpell.entity))
         {
             console.log("jello");
             game.add.collider(this.this_Exact_Zombie, mySpells.basicSpell.entity);
+            //This is an array to essentially be checked in other methods to see what the zombie has overlapped with
             this.hit_With_Stuff.push(1);
         }
         if(game.overlap(this.this_Exact_Zombie, mySpells.fireSpell.entity))
@@ -118,20 +123,46 @@ class zombie_Man
 
     lose_Health()
     {
+        //Checks to see how many objects have collided with the zombie.
         for(let i = 0; i < this.hit_With_Stuff.length ; i++)
         {
+            /*The method used in the if uses an and gate to represent a bit flag. If the bit flag returns not true, The zombie
+            will lose health appropriate to what spell hit it. */
             if(!this.resisting_Attack(this.hit_With_Stuff[i]))
             {
-                this.health -= mySpells.basicSpell.damage;
-                console.log(this.health);
+                switch (this.hit_With_Stuff[i])
+                {
+                    case 1:
+                        this.health -= mySpells.basicSpell.damage;
+                        console.log(this.health);
+                        break;
+                    case 2:
+                        this.health -= mySpells.fireSpell.damage;
+                        console.log(this.health);
+                        break;
+                    case 4:
+                        this.health -= mySpells.electricSpell.damage;
+                        console.log(this.health);
+                        break;
+                    case 8:
+                        this.health -= mySpells.earthSpell.damage;
+                        console.log(this.health);
+                        break;
+                    default:
+                        console.log("Something went wrong sir!");
+                        break;
+                }
+                
             }
             else
             {
                 console.log("resisted attack")
             }
         }
+        //Need to reinitialse the array variable in order not to get repeated attacks on the zombie.
         this.hit_With_Stuff = [];
         
+        //This sets the zombie as dead dead
         if(this.health < 1)
         {
             this.dead = true;

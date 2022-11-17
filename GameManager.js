@@ -1,21 +1,25 @@
 class GameManager
 {
+    //This object contains informations that is key for managing the zombies within this class
     managingZombies = 
     {
         all_Zombies_Dead : true,
         max_Zombies : 3,
+        //This is entirely a placement so this doesn't get caught as an undefined
         alive_Zombies : "yo mama"
     }
 
+    //object involved with keeping in check what happens with the spells
     managingSpells = 
     {
         //There Are currently 4 spells in the game so should have 4 booleans
         destroyingSpells : [false,false,false,false]
     }
     
+    //main method for the zombies
     spawning_And_Killing_Zombos(physics,math)
     {
-
+        //this = if all the zombies are currently dead
         if(this.managingZombies.all_Zombies_Dead)
         {
             let start_x = 200;
@@ -29,6 +33,7 @@ class GameManager
                 zombies.push(makingZombies(placement_Zombie));
             }
 
+            //Not to get confused, this function is used above in 2 lines
             function makingZombies(myZombie)
             {
                 //chooses a random number from 0 to 4. This is relevant because it will determine the type of zombie
@@ -59,12 +64,21 @@ class GameManager
                 //the zombies variable is an array of the class within Walkers.js called zombie_Man
                 zombies[i].this_Exact_Zombie.anims.play(zombies[i].animationName, true);
 
+                //This checks if the zombies are colliding with something, for now it only accepts spells but might add the player as
+                //a possible something
                 zombies[i].colliding_With_Something(physics);
 
+                /*this calls the function below in 2 lines
+                passes through the specific zombie within the array and passes through this whole class in order to stay within scope*/
                 check_Hit_Stuff_With_Specific_Zombie(zombies[i], this);
 
                 function check_Hit_Stuff_With_Specific_Zombie(the_Top_Dog, myManager)
                 {
+                    /*This whole for loop checks if a specific zombie gets hit with a particular object
+                    1 through to 8 = the specific spell. This is mainly used to check what spell is needed to be destroyed.
+                    I did this because before, when 1 spell would collide with 2 zombies, only one zombie would take the hit.
+                    This is because I would destroy the spell object too easily. This is one ways to check if a spell collides
+                    with more than just one entity. */
                     for(let i = 0 ; i < the_Top_Dog.hit_With_Stuff.length ; i++)
                     {
                         if(the_Top_Dog.hit_With_Stuff[i] == 1)
@@ -105,10 +119,15 @@ class GameManager
             {
                 zombies[i].lose_Health();
             }
+            /*The full function is shown below in 2 lines. Passes this class as an argument. */
             deleting_Unwanted_Spells(this);
-
+            
+            //The call to this function is literally a line above
             function deleting_Unwanted_Spells(myManager)
             {
+                /*All these if statements essentially check if any spell has collided with a zombie. This is set to true with methods
+                above. This solves the issue of instantly destroying the spell when the spell would collide with any zombie entity.
+                This means that a spell can hit multiple zombies before being destroyed.*/
                 if(myManager.managingSpells.destroyingSpells[0])
                 {
                     mySpells.basicSpell.entity.destroy(true);
