@@ -3,18 +3,24 @@ class MainMan
     extraStats = 
     {
         health : 100,
-        mana : 40,
+        mana : 200,
         dead : false,
     }
 
-    rechargeMana()
-    {
-        this.stats.mana += 10;
-        console.log(this.stats.mana);
-    }
+    
 
     lose_health()
     {
 
     }
+}
+
+function rechargeMana(mc)
+{
+    mc.extraStats.mana += 10;
+    if(mc.extraStats.mana > 200)
+    {
+        mc.extraStats.mana = 200;
+    }
+    console.log(mc.extraStats.mana);
 }
