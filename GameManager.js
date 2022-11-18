@@ -120,6 +120,10 @@ class GameManager
     next_Round()
     {
         this.managingZombies.max_Zombies += 2;
+        if(this.managingZombies.max_Zombies > 20)
+        {
+            this.managingZombies.max_Zombies = 20;
+        }
     }
 }
 

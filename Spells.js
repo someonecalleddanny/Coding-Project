@@ -75,7 +75,7 @@ function casting_Spells(game)
     if(key1.isDown)
     {
         //Go to Explanation 1:
-        if(!spells_Pressed[0] && myMainMan.extraStats.mana > 0)
+        if(!spells_Pressed[0] && checking_Spell_Cost(mySpells.basicSpell.manaCost) > -1)
         {
             //adds the normal spell sprite
             mySpells.basicSpell.entity = game.physics.add.sprite(player.x, player.y, 'normalSpell');
@@ -96,7 +96,7 @@ function casting_Spells(game)
     if(key2.isDown)
     {
         //Go to Explanation 1:
-        if(!spells_Pressed[1] && myMainMan.extraStats.mana > 0)
+        if(!spells_Pressed[1] && checking_Spell_Cost(mySpells.fireSpell.manaCost) > -1)
         {
             //adds the fire spell sprite
             mySpells.fireSpell.entity = game.physics.add.sprite(player.x, player.y, 'fire');
@@ -115,7 +115,7 @@ function casting_Spells(game)
     if(key3.isDown)
     {
         //Go to Explanation 1:
-        if(!spells_Pressed[2] && myMainMan.extraStats.mana > 0)
+        if(!spells_Pressed[2] && checking_Spell_Cost(mySpells.electricSpell.manaCost) > -1)
         {
             //adds the electric spell sprite
             mySpells.electricSpell.entity = game.physics.add.sprite(player.x, player.y, 'electric');
@@ -133,7 +133,7 @@ function casting_Spells(game)
     if(key4.isDown)
     {
         //Go to Explanation 1:
-        if(!spells_Pressed[3] && myMainMan.extraStats.mana > 0)
+        if(!spells_Pressed[3] &&  checking_Spell_Cost(mySpells.earthSpell.manaCost) > -1)
         {
             //adds the earth spell sprite
             mySpells.earthSpell.entity = game.physics.add.sprite(player.x, player.y, 'earth');
@@ -259,4 +259,9 @@ function shooting_Spell(desired_Speed, spell)
         }
     }
     
+}
+
+function checking_Spell_Cost(spellCost)
+{
+    return  myMainMan.extraStats.mana - spellCost;
 }
