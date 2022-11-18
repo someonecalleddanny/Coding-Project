@@ -3,7 +3,7 @@ class MainMan
     extraStats = 
     {
         health : 100,
-        mana : 100,
+        mana : 40,
         dead : false,
     }
 

@@ -32,7 +32,8 @@ class Spells
         entity : "placement",
         created : false,
         damage : 3,
-        speed : 300
+        speed : 300,
+        manaCost : 20
     }
 
     earthSpell = 
@@ -40,7 +41,8 @@ class Spells
         entity : "placement",
         created : false,
         damage : 2,
-        speed : 90
+        speed : 90,
+        manaCost : 7
     }
 }
 
@@ -73,12 +75,17 @@ function casting_Spells(game)
     if(key1.isDown)
     {
         //Go to Explanation 1:
-        if(!spells_Pressed[0])
+        if(!spells_Pressed[0] && myMainMan.extraStats.mana > 0)
         {
             //adds the normal spell sprite
             mySpells.basicSpell.entity = game.physics.add.sprite(player.x, player.y, 'normalSpell');
             mySpells.basicSpell.created = true;
+            myMainMan.extraStats.mana -= mySpells.basicSpell.manaCost;
+            console.log(myMainMan.extraStats.mana);
+
             shooting_Spell(mySpells.basicSpell.speed, mySpells.basicSpell.entity);
+            
+            
 
             //Go to Explanation 2:
             spells_Pressed[0] = true;
@@ -89,11 +96,14 @@ function casting_Spells(game)
     if(key2.isDown)
     {
         //Go to Explanation 1:
-        if(!spells_Pressed[1])
+        if(!spells_Pressed[1] && myMainMan.extraStats.mana > 0)
         {
             //adds the fire spell sprite
             mySpells.fireSpell.entity = game.physics.add.sprite(player.x, player.y, 'fire');
             mySpells.fireSpell.created = true;
+            myMainMan.extraStats.mana -= mySpells.fireSpell.manaCost;
+            console.log(myMainMan.extraStats.mana);
+
             shooting_Spell(mySpells.fireSpell.speed,  mySpells.fireSpell.entity);
 
             //Go to Explanation 2:
@@ -105,11 +115,13 @@ function casting_Spells(game)
     if(key3.isDown)
     {
         //Go to Explanation 1:
-        if(!spells_Pressed[2])
+        if(!spells_Pressed[2] && myMainMan.extraStats.mana > 0)
         {
             //adds the electric spell sprite
             mySpells.electricSpell.entity = game.physics.add.sprite(player.x, player.y, 'electric');
             mySpells.fireSpell.created = true;
+            myMainMan.extraStats.mana -= mySpells.electricSpell.manaCost;
+            console.log(myMainMan.extraStats.mana);
             shooting_Spell(mySpells.electricSpell.speed, mySpells.electricSpell.entity);
 
             //Go to Explanation 2:
@@ -121,11 +133,13 @@ function casting_Spells(game)
     if(key4.isDown)
     {
         //Go to Explanation 1:
-        if(!spells_Pressed[3])
+        if(!spells_Pressed[3] && myMainMan.extraStats.mana > 0)
         {
             //adds the earth spell sprite
             mySpells.earthSpell.entity = game.physics.add.sprite(player.x, player.y, 'earth');
             mySpells.earthSpell.created = true;
+            myMainMan.extraStats.mana -= mySpells.earthSpell.manaCost;
+            console.log(myMainMan.extraStats.mana);
             shooting_Spell(mySpells.earthSpell.speed, mySpells.earthSpell.entity);
             
             //Go to Explanation 2:

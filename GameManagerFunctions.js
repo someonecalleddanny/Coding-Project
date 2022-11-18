@@ -57,7 +57,7 @@ function deleting_Unwanted_Spells(myManager)
         myManager.managingSpells.destroyingSpells[3] = false;
     }
 }
-let glitchy_Delinquents = [];
+//let glitchy_Delinquents = [];
 function cant_Overlap_With_Each_Other(myZombie, physics)
 {
     for(let i = 0 ; i < myZombie.length - 1 ; i++)
