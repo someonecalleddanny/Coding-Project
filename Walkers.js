@@ -74,7 +74,12 @@ class zombie_Man
 
     }
 
-    running_Towards_Player(player, physics)
+    not_Colliding_Into_Horde(physics,other_Zombie)
+    {
+        physics.add.collider(this.this_Exact_Zombie, other_Zombie);
+    }
+
+    running_Towards_Player(player, physics, )
     {
         physics.moveTo(this.this_Exact_Zombie, player.x, player.y);
         //this.this_Exact_Zombie.setVelocity(player.x,player.y);

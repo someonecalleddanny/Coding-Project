@@ -57,22 +57,19 @@ function deleting_Unwanted_Spells(myManager)
         myManager.managingSpells.destroyingSpells[3] = false;
     }
 }
-
+let glitchy_Delinquents = [];
 function cant_Overlap_With_Each_Other(myZombie, physics)
 {
     for(let i = 0 ; i < myZombie.length - 1 ; i++)
     {
-        let minXBound_Zom1 = myZombie[i].this_Exact_Zombie.x - 20;
-        let maxXBound_Zom1 = myZombie[i].this_Exact_Zombie.x + 20;
-        let minYBound_Zom1 = myZombie[i].this_Exact_Zombie.y + 20;
-        let maxYBound_Zom1 = myZombie[i].this_Exact_Zombie.y - 20;
         for(let y = i + 1 ; y < myZombie.length; y++)
         {
-            let minXBound_Zom2 = myZombie[y].this_Exact_Zombie.x - 16;
-            let maxXBound_Zom2 = myZombie[y].this_Exact_Zombie.x + 16;
-            let minYBound_Zom2 = myZombie[y].this_Exact_Zombie.y + 16;
-            let maxYBound_Zom2 = myZombie[y].this_Exact_Zombie.y - 16;
-
+            /*The collison detection in Phaser is utter garbage and whoever made it has to re-do years in a game development course
+            The problem is, objects can get stuck inside another object due to lag and then, if you want them to stop,
+            you can't in time due to the framerate as well as the object dragging the other object inside itself.
+            Utter garabage, ruined my day. Second class in this framework that is utterly glitch infested. Obviously, I fixed it after 
+            many attempts. Bear witness to the onslaught of green from all my bashing against a brick wall until it falls.
+            physics.add.collider(myZombie[i].this_Exact_Zombie, myZombie[y].this_Exact_Zombie);
             /*minXBound_Zom1 <= myZombie[y].this_Exact_Zombie.x && maxXBound_Zom1 >= myZombie[y].this_Exact_Zombie.x  &&
                 minYBound_Zom1 >= myZombie[y].this_Exact_Zombie.y && maxYBound_Zom1 <= myZombie[y].this_Exact_Zombie.y*/
             //collision does't work for dynamic objects for some reason so this is why im doing my collison manually
@@ -80,17 +77,17 @@ function cant_Overlap_With_Each_Other(myZombie, physics)
             //32x32 /2 = 16x center 16y center
             if(!(physics.overlap(myZombie[i].this_Exact_Zombie,  myZombie[y].this_Exact_Zombie)))
             {
-                console.log("im moving");
-                //myZombie[y].this_Exact_Zombie.setBounce(10, 10);
-                physics.add.collider(myZombie[i].this_Exact_Zombie, myZombie[y].this_Exact_Zombie);
-                myZombie[i].running_Towards_Player(player, physics);
-                myZombie[y].running_Towards_Player(player, physics);
+                //console.log("im moving");
+                //myZombie[i].running_Towards_Player(player, physics);
+                //myZombie[y].running_Towards_Player(player, physics);
                 
             }
             else
             {
-                console.log("not moving");
-                //physics.add.collider(myZombie[i].this_Exact_Zombie, myZombie[y].this_Exact_Zombie);
+                //console.log("not moving");
+                physics.add.collider(myZombie[i].this_Exact_Zombie, myZombie[y].this_Exact_Zombie);
+                myZombie[i].this_Exact_Zombie.setVelocity(0,0);
+                //myZombie[i].this_Exact_Zombie.x = 0;
             }
         }
     }

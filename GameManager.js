@@ -33,7 +33,7 @@ class GameManager
                 //push the class into the zombies array + the function is shown below
                 this.managingZombies.all_Zombies.push(makingZombies(placement_Zombie));
             }
-
+                
             //Not to get confused, this function is used above in 2 lines
             function makingZombies(myZombie)
             {
@@ -110,7 +110,7 @@ class GameManager
         {
             this.managingZombies.all_Zombies[i].lose_Health();
 
-            //this.managingZombies.all_Zombies[i].running_Towards_Player(player, physics);
+            this.managingZombies.all_Zombies[i].running_Towards_Player(player, physics);
         }
         cant_Overlap_With_Each_Other(this.managingZombies.all_Zombies, physics);
         /*The full function is shown below this class. Passes this class as an argument. */
