@@ -1,9 +1,11 @@
+const max_Mana = 200;
+const max_Health = 100;
 class MainMan
 {
     extraStats = 
     {
-        health : 100,
-        mana : 200,
+        health : max_Health,
+        mana : max_Mana,
         dead : false,
     }
 }
@@ -27,3 +29,4 @@ function rechargeMana(mc)
     }
     console.log(mc.extraStats.mana);
 }
+

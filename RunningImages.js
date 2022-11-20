@@ -3,7 +3,7 @@ var currentBackground;
 function preLoadAllStuff(game)
 {
     //currentBackground = 'grass';
-    game.load.image("grass", 'assets/grass_background.png')
+    game.load.image("grass", 'assets/grass_background.png');
 
 
     //using the dude from the demo because he is cute/cool looking
@@ -29,6 +29,9 @@ function preLoadAllStuff(game)
     game.load.spritesheet("electric", "assets/electric.png", { frameWidth: 32 , frameHeight: 32});
 
     game.load.spritesheet("earth", "assets/earth.png", { frameWidth: 32 , frameHeight: 32});
+
+    //loading the mana star
+    game.load.image("manaStar", 'assets/manaStar.png');
 }
 function createTheBackground(game)
 {

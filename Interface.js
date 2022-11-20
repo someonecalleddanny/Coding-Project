@@ -1,7 +1,11 @@
 class Interface
 {
+    //All of the displaying and updating the bars are similar
+    //They first create the text box with the desired characteristics 
+    //They then are constantly updated with data from other classes and files
     displayManaBar(game)
     {
+        //manaBar is a global varible held within the runner
         manaBar = game.add.text(0, 36, 'Mana: ', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif'});
         manaBar.setFill("blue");
         manaBar.setScale(2,2);
@@ -10,6 +14,7 @@ class Interface
     }
     updateManaBar()
     {
+        //Uses the data held within the extraStats object which is held within "MainCharacter.js"
         manaBar.setText("Mana: " + myMainMan.extraStats.mana)
         if(myMainMan.extraStats.mana < 0)
         {
@@ -19,6 +24,7 @@ class Interface
 
     displayHealthBar(game)
     {
+        //healthBar is a global variable held within the runner
         healthBar = game.add.text(0, 0, 'Health: ', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif'});
         healthBar.setFill("red");
         healthBar.setScale(2,2);
@@ -45,6 +51,7 @@ class Interface
 
     updateRoundBar()
     {
+        //roundBar is a global variable held within the runner, It is updated in "GameManager.js" with a method called next_Round()
         roundBar.setText("Round: " + currentRound);
     }
 
@@ -59,6 +66,7 @@ class Interface
 
     updateZombieBar()
     {
+        //Holds data held within the managingZombies object which is held within the "GameManager.js"
         zombieBar.setText("Zombies: " + myGameManager.managingZombies.alive_Zombies);
     }
 }

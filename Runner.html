@@ -11,6 +11,7 @@
     <script src = "RunningImages.js"></script>
     <script src = "PlayerMovement.js"></script>
     <script src = "Spells.js"></script>
+    <script src = "manaStar.js"></script>
     <script src = "MainCharacter.js"></script>
     <script src = "Walkers.js"></script>
     <script src = "GameManagerFunctions.js"></script>
@@ -49,20 +50,27 @@ var game = new Phaser.Game(config);
 var player;
 var zombies = [];
 
+//Misc Stuff
+var mana_Stars_In_Game = [];
+
+//all the keys
 let keyA;
 let keyS;
 let keyD;
 let keyW;
 
+//all the keys
 let key1;
 let key2;
 let key3;
 let key4;
 let keySpace;
 
+//Instantiating classes
 let myGameManager = new GameManager();
 let myMainMan = new MainMan();
 let myInterface = new Interface();
+let myManaStar = new manaStar();
 
 //The interface objects
 let manaBar;
@@ -88,6 +96,8 @@ function create ()
 {
     createTheBackground(this)
     //const text = this.add.text(350, 270, 'ppoooppp', { font: '16px Courier', fill: '#00ff00' });
+
+    //intialising the interface bars for the player to see
     myInterface.displayManaBar(this);
     myInterface.displayHealthBar(this);
     myInterface.displayRoundBar(this);
@@ -119,12 +129,18 @@ function create ()
     //create the cursors on the keyboard to be able to be inputted
     cursors = this.input.keyboard.createCursorKeys();
 
+    //These are the timed events that keep looping functions every set interval
+    //This recharges the mana every 1.5s. Calls the rechargeMana function which is in the "MainCharacter.js" file
     timedEvent = this.time.addEvent({ delay: 1500, callback: rechargeMana,args:[myMainMan], callbackScope: this, loop: true });
+    //damages the player when he/she is hit, checks every second. Calls the damagePlayer function in "GameManagerFunctions.js"
     damagingPlayer = this.time.addEvent({ delay: 1000, callback: damagePlayer,args:[myGameManager], callbackScope: this, loop: true });
+    /*heals the player every 10 seconds. Calls the rechargeHealth function which is in the "MainCharacter.js" file*/
     Healing_Over_Time = this.time.addEvent({ delay: 10000, callback: rechargeHealth,args:[myMainMan], callbackScope: this, loop: true });
     
 }
+//global array that checks which spell is pressed. Used in many scripts
 let spells_Pressed = [false,false,false,false];
+//Instantiates the spells class. Instantiated here as it is mostly used in the update function
 let mySpells = new Spells();
 
 function update ()
@@ -135,19 +151,27 @@ function update ()
     //checks if the zombies are dead to respawn them.
     myGameManager.spawning_And_Killing_Zombos(this.physics, Phaser.Math.RND, myGameManager);
 
+    //If all the zombies the zombies are still alive
     if(!myGameManager.managingZombies.all_Zombies_Dead)
     {
+        //Does the method in the GameManager class
         myGameManager.zombie_Stuff(this.physics);
     }
 
+    //constantly updates the interface bars 
     myInterface.updateManaBar();
     myInterface.updateHealthBar();
     myInterface.updateRoundBar();
     myInterface.updateZombieBar();
     //myMainMan.rechargeMana();
 
+
+    myGameManager.collecting_Stars(this.physics);
+    
+    //Allows the mc to dash this is in the "PlayerMovement.js" file
     dash_The_Lad();
 
+    //allows the player to cast the spells. This is in "Spells.js"
     casting_Spells(this);
 
     //the old moving script which is cool and complex but most likely 0.1% less efficient than the moveTheLad()

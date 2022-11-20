@@ -101,11 +101,14 @@ function cant_Overlap_With_Each_Other(myZombie, physics)
 
 function damagePlayer(Managing)
 {
+    //If the player is hit 
     if(Managing.managingPlayer.isHit)
     {
-
+        //subtract the health of the player by the damage specific to the zombie type
         myMainMan.extraStats.health -= Managing.managingPlayer.youve_Been_Hit_By_Youve_Been_Struck_By;
+        //Turn this back to false so this doesn't keep repeating
         Managing.managingPlayer.isHit = false;
+        //This will turn the damage hit to 0 for the player
         Managing.managingPlayer.youve_Been_Hit_By_Youve_Been_Struck_By = 0;
         console.log("health is " + myMainMan.extraStats.health);
     }
@@ -124,4 +127,16 @@ function setting_Random_Starting_Positions(math, manager)
         manager.managingZombies.start_Y = math.pick([-10,610]);
         manager.managingZombies.start_X = math.between(-5, 805);
     }
+}
+
+function spawn_manaStar_On_Body(myZombie, math, physics)
+{
+    let placement_Star = new manaStar();
+    mana_Stars_In_Game.push(placement_Star);
+    mana_Stars_In_Game[mana_Stars_In_Game.length - 1].stuff_Inside.manaHeld = math.pick([10,20,30]);
+    mana_Stars_In_Game[mana_Stars_In_Game.length - 1].stuff_Inside.entity = physics.add.sprite(myZombie.x ,myZombie.y, "manaStar");
+    //myManager.managingMana.spawned = true;
+
+    //physics.add.collider(player, mana_Stars_In_Game[mana_Stars_In_Game.length - 1].stuff_Inside.entity);
+    //physics.add.overlap(player, mana_Stars_In_Game[mana_Stars_In_Game.length - 1].stuff_Inside.entity, collecting_Stars, null, this);
 }

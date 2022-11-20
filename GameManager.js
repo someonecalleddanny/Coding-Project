@@ -82,6 +82,7 @@ class GameManager
                 //and remove it out of the array of the zombie_Man classes
                 if(this.managingZombies.all_Zombies[i].dead)
                 {
+                    spawn_manaStar_On_Body(this.managingZombies.all_Zombies[i].this_Exact_Zombie, math, physics);
                     this.managingZombies.all_Zombies[i].this_Exact_Zombie.destroy(true);
                     this.managingZombies.all_Zombies.splice(i,1);
                 }
@@ -121,15 +122,20 @@ class GameManager
         {
             this.managingZombies.all_Zombies[i].lose_Health();
 
+            //checks if the zombie hits the player as well as the player not being multi hit
             if(this.managingZombies.all_Zombies[i].hit_Player(physics) && (!this.managingPlayer.isHit))
             {
+                //Gets the specific damage from the type of zombie
                 this.managingPlayer.youve_Been_Hit_By_Youve_Been_Struck_By += this.managingZombies.all_Zombies[i].damage;
                 console.log("hit");
+                //This only allows one hit per zombie
                 this.managingPlayer.isHit = true;
             }
 
+            //Each zombie will move towards the co-ords of the player
             this.managingZombies.all_Zombies[i].running_Towards_Player(player, physics);
         }
+        //Pain in the bum this one, Makes the zombies not fully overlap with each other and simulate a horde
         cant_Overlap_With_Each_Other(this.managingZombies.all_Zombies, physics);
         /*The full function is shown below this class. Passes this class as an argument. */
         deleting_Unwanted_Spells(this);
@@ -137,11 +143,40 @@ class GameManager
 
     next_Round()
     {
+        //increases the amount of zombies by 2
         this.managingZombies.max_Zombies += 2;
+        //increments the current round
         currentRound++;
+        //only allows a maximum of 20 zombies due to performance
         if(this.managingZombies.max_Zombies > 20)
         {
             this.managingZombies.max_Zombies = 20;
+        }
+    }
+
+    collecting_Stars(physics)
+    {
+        if(mana_Stars_In_Game.length > 0)
+        {
+            for(let i = 0 ; i < mana_Stars_In_Game.length ; i++)
+            {
+                if(physics.overlap(player, mana_Stars_In_Game[i].stuff_Inside.entity))
+                {
+                    console.log("mana before = " + myMainMan.extraStats.mana);
+                    if(myMainMan.extraStats.mana < max_Mana - mana_Stars_In_Game[i].stuff_Inside.manaHeld)
+                    {
+                        myMainMan.extraStats.mana += mana_Stars_In_Game[i].stuff_Inside.manaHeld;
+                    }
+                    else
+                    {
+                        myMainMan.extraStats.mana = max_Mana;
+                    }
+                    mana_Stars_In_Game[i].stuff_Inside.entity.destroy(true);
+                    mana_Stars_In_Game.splice(i,1);
+                    console.log("mana now = " + myMainMan.extraStats.mana);
+                    
+                }
+            }
         }
     }
 }
