@@ -72,6 +72,10 @@ let myMainMan = new MainMan();
 let myInterface = new Interface();
 let myManaStar = new manaStar();
 
+//global array that checks which spell is pressed. Used in many scripts
+let spells_Pressed = [false,false,false,false];
+let mySpells = new Spells();
+
 //The interface objects
 let manaBar;
 let healthBar;
@@ -138,10 +142,6 @@ function create ()
     Healing_Over_Time = this.time.addEvent({ delay: 10000, callback: rechargeHealth,args:[myMainMan], callbackScope: this, loop: true });
     
 }
-//global array that checks which spell is pressed. Used in many scripts
-let spells_Pressed = [false,false,false,false];
-//Instantiates the spells class. Instantiated here as it is mostly used in the update function
-let mySpells = new Spells();
 
 function update ()
 {
@@ -177,6 +177,10 @@ function update ()
     //the old moving script which is cool and complex but most likely 0.1% less efficient than the moveTheLad()
     //var moveyGroovy = new imNotSeeingEnoughMovement(player);
 
+    if(myMainMan.extraStats.health < 0)
+    {
+        return;
+    }
 }
 </script> 
 </body>
