@@ -11,8 +11,8 @@
     <script src = "RunningImages.js"></script>
     <script src = "PlayerMovement.js"></script>
     <script src = "Spells.js"></script>
-    <script src = "Walkers.js"></script>
     <script src = "MainCharacter.js"></script>
+    <script src = "Walkers.js"></script>
     <script src = "GameManagerFunctions.js"></script>
     <script src = "Interface.js"></script>
     <script src = "GameManager.js"></script>
@@ -64,9 +64,19 @@ let myGameManager = new GameManager();
 let myMainMan = new MainMan();
 let myInterface = new Interface();
 
+//The interface objects
 let manaBar;
 let healthBar;
+let roundBar;
+let zombieBar;
+
+//this is used for the round bar
+let currentRound = 1;
+
+//All the timers
 let timedEvent;
+let damagingPlayer;
+let Healing_Over_Time;
 
 function preload ()
 {
@@ -80,6 +90,8 @@ function create ()
     //const text = this.add.text(350, 270, 'ppoooppp', { font: '16px Courier', fill: '#00ff00' });
     myInterface.displayManaBar(this);
     myInterface.displayHealthBar(this);
+    myInterface.displayRoundBar(this);
+    myInterface.displayZombieBar(this)
 
     //movement keys
     keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -96,6 +108,7 @@ function create ()
 
     //dude
     player = this.physics.add.sprite(100, 450, 'dude');
+    player.setCollideWorldBounds(true);
     
     //create the animation for the playable character
     mcAnim(this);
@@ -107,6 +120,8 @@ function create ()
     cursors = this.input.keyboard.createCursorKeys();
 
     timedEvent = this.time.addEvent({ delay: 1500, callback: rechargeMana,args:[myMainMan], callbackScope: this, loop: true });
+    damagingPlayer = this.time.addEvent({ delay: 1000, callback: damagePlayer,args:[myGameManager], callbackScope: this, loop: true });
+    Healing_Over_Time = this.time.addEvent({ delay: 10000, callback: rechargeHealth,args:[myMainMan], callbackScope: this, loop: true });
     
 }
 let spells_Pressed = [false,false,false,false];
@@ -118,7 +133,7 @@ function update ()
     moveTheLad(player); 
 
     //checks if the zombies are dead to respawn them.
-    myGameManager.spawning_And_Killing_Zombos(this.physics, Phaser.Math.RND);
+    myGameManager.spawning_And_Killing_Zombos(this.physics, Phaser.Math.RND, myGameManager);
 
     if(!myGameManager.managingZombies.all_Zombies_Dead)
     {
@@ -127,6 +142,8 @@ function update ()
 
     myInterface.updateManaBar();
     myInterface.updateHealthBar();
+    myInterface.updateRoundBar();
+    myInterface.updateZombieBar();
     //myMainMan.rechargeMana();
 
     dash_The_Lad();

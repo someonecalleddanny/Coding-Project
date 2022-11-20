@@ -7,7 +7,9 @@ class GameManager
         max_Zombies : 3,
         //This is entirely a placement so this doesn't get caught as an undefined
         alive_Zombies : "yo mama",
-        all_Zombies : []
+        all_Zombies : [],
+        start_X : 0,
+        start_Y : 0
     }
 
     //object involved with keeping in check what happens with the spells
@@ -16,20 +18,28 @@ class GameManager
         //There Are currently 4 spells in the game so should have 4 booleans
         destroyingSpells : [false,false,false,false]
     }
+
+    managingPlayer = 
+    {
+        isHit : false,
+        youve_Been_Hit_By_Youve_Been_Struck_By : 0
+    }
     
     //main method for the zombies
-    spawning_And_Killing_Zombos(physics,math)
+    spawning_And_Killing_Zombos(physics,math, manager)
     {
         //this = if all the zombies are currently dead
         if(this.managingZombies.all_Zombies_Dead)
         {
-            let start_x = 200;
-            let start_y = 400;
+            
+            //let start_x = (player.x < 400) ? math.between(400, 800) : math.between(0, 400);
+            //let start_y = (player.y < 400) ? math.between(400, 800) : math.between(0, 400);
             //creating zombies
             for(let i = 0; i < this.managingZombies.max_Zombies ; i++)
             {
                 //instantiating the class within Walkers.js
                 let placement_Zombie = new zombie_Man();
+                setting_Random_Starting_Positions(math, this);
                 //push the class into the zombies array + the function is shown below
                 this.managingZombies.all_Zombies.push(makingZombies(placement_Zombie));
             }
@@ -43,11 +53,11 @@ class GameManager
                 //determines the type of zombie
                 myZombie.type_Of_Zombie(randInt);
                  //setting the x and y coordinates for each zombies
-                 myZombie.current_x = start_x;
-                 myZombie.current_y = start_y;
+                 myZombie.current_x = manager.managingZombies.start_X;
+                 myZombie.current_y = manager.managingZombies.start_Y;
                  //adds a sprite for each instance of the zombie. Has the relevant properties from the zombie_Man classes
                  myZombie.this_Exact_Zombie = physics.add.sprite(myZombie.current_x ,myZombie.current_y ,myZombie.spriteName).setScale(2.5,2);
-                 start_x += 90;
+                 //start_x += 90;
 
                  return myZombie;
             }
@@ -92,6 +102,7 @@ class GameManager
 
     zombie_Stuff(physics)
     {
+        //this for loop is a checker before committing big decisons 
         for(let i = 0; i < this.managingZombies.all_Zombies.length ; i++)
         {
             
@@ -110,6 +121,13 @@ class GameManager
         {
             this.managingZombies.all_Zombies[i].lose_Health();
 
+            if(this.managingZombies.all_Zombies[i].hit_Player(physics) && (!this.managingPlayer.isHit))
+            {
+                this.managingPlayer.youve_Been_Hit_By_Youve_Been_Struck_By += this.managingZombies.all_Zombies[i].damage;
+                console.log("hit");
+                this.managingPlayer.isHit = true;
+            }
+
             this.managingZombies.all_Zombies[i].running_Towards_Player(player, physics);
         }
         cant_Overlap_With_Each_Other(this.managingZombies.all_Zombies, physics);
@@ -120,6 +138,7 @@ class GameManager
     next_Round()
     {
         this.managingZombies.max_Zombies += 2;
+        currentRound++;
         if(this.managingZombies.max_Zombies > 20)
         {
             this.managingZombies.max_Zombies = 20;

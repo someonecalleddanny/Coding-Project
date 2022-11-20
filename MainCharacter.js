@@ -6,11 +6,16 @@ class MainMan
         mana : 200,
         dead : false,
     }
+}
 
-    lose_health()
+function rechargeHealth(mc)
+{
+    mc.extraStats.health += 15;
+    if(mc.extraStats.health > 100)
     {
-
+        mc.extraStats.health = 100;
     }
+    console.log(mc.extraStats.health);
 }
 
 function rechargeMana(mc)

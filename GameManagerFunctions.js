@@ -98,3 +98,30 @@ function cant_Overlap_With_Each_Other(myZombie, physics)
     physics.add.collider(myZombie[0].this_Exact_Zombie, myZombie[2].this_Exact_Zombie);*/
    
 }
+
+function damagePlayer(Managing)
+{
+    if(Managing.managingPlayer.isHit)
+    {
+
+        myMainMan.extraStats.health -= Managing.managingPlayer.youve_Been_Hit_By_Youve_Been_Struck_By;
+        Managing.managingPlayer.isHit = false;
+        Managing.managingPlayer.youve_Been_Hit_By_Youve_Been_Struck_By = 0;
+        console.log("health is " + myMainMan.extraStats.health);
+    }
+}
+
+function setting_Random_Starting_Positions(math, manager)
+{
+    let decider = math.between(0,1);
+    if(decider == 0) 
+    {
+        manager.managingZombies.start_X = math.pick([-10,810]);
+        manager.managingZombies.start_Y = math.between(-5, 605);
+    }
+    else
+    {
+        manager.managingZombies.start_Y = math.pick([-10,610]);
+        manager.managingZombies.start_X = math.between(-5, 805);
+    }
+}

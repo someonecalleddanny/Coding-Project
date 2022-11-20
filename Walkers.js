@@ -9,6 +9,7 @@ class zombie_Man
     hit_With_Stuff = [];
     resistance;
     speed;
+    damage;
     isHit = false;
     
 
@@ -26,30 +27,45 @@ class zombie_Man
                 this.spriteName = "zombie";
                 this.animationName = "move_Mate";
                 this.resistance = 0;
+                this.damage = 10;
+                this.speed = 50;
+                this.health = 5;
                 break;
             //this is the basic zombie that resists the basic spell
             case 1:
                 this.spriteName = "basiczombie";
                 this.animationName = "move_Basic_Mate";
                 this.resistance = 1;
+                this.damage = 15;
+                this.health = 6;
+                this.speed = 60;
                 break;
             //this is the fire zombie that resists the fire spell
             case 2:
                 this.spriteName = "firezombie";
                 this.animationName = "move_Fire_Mate";
                 this.resistance = 2;
+                this.damage = 20;
+                this.health = 6;
+                this.speed = 60;
                 break;
             //this is the electric zombie that will resist the electric spell
             case 3:
                 this.spriteName = "electriczombie";
                 this.animationName = "move_Electric_Mate";
                 this.resistance = 4;
+                this.damage = 15;
+                this.health = 4;
+                this.speed = 90;
                 break;
             //this is the earth zombie that will resist earth spells
             case 4:
                 this.spriteName = "earthzombie";
                 this.animationName = "move_Earth_Mate";
                 this.resistance = 8;
+                this.damage = 30;
+                this.health = 10;
+                this.speed = 40;
                 break;
             default:
                 console.log("ERROR: INPUTTED WRONG NUMBER TO PICK ZOMBIE. PICK NUMBER FROM 1-4");
@@ -74,19 +90,25 @@ class zombie_Man
 
     }
 
-    not_Colliding_Into_Horde(physics,other_Zombie)
+    running_Towards_Player(player, physics)
     {
-        physics.add.collider(this.this_Exact_Zombie, other_Zombie);
-    }
-
-    running_Towards_Player(player, physics, )
-    {
-        physics.moveTo(this.this_Exact_Zombie, player.x, player.y);
+        physics.moveTo(this.this_Exact_Zombie, player.x, player.y, this.speed);
         //this.this_Exact_Zombie.setVelocity(player.x,player.y);
     }
 
-    hit_Player()
+    hit_Player(physics)
     {
+        if(physics.collide(this.this_Exact_Zombie, player))
+        {
+            //physics.add.collider(this.this_Exact_Zombie, player);
+            //myMainMan.extraStats.health -= this.damage;
+            player.setBounce(70,70);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
         //if hit player == return true
 
         //if not hit player == return false;
