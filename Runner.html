@@ -58,6 +58,7 @@ let key1;
 let key2;
 let key3;
 let key4;
+let keySpace;
 
 let myGameManager = new GameManager();
 let myMainMan = new MainMan();
@@ -91,6 +92,7 @@ function create ()
     key2 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
     key3 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
     key4 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
+    keyShift = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
 
     //dude
     player = this.physics.add.sprite(100, 450, 'dude');
@@ -104,7 +106,7 @@ function create ()
     //create the cursors on the keyboard to be able to be inputted
     cursors = this.input.keyboard.createCursorKeys();
 
-    timedEvent = this.time.addEvent({ delay: 1000, callback: rechargeMana,args:[myMainMan], callbackScope: this, loop: true });
+    timedEvent = this.time.addEvent({ delay: 1500, callback: rechargeMana,args:[myMainMan], callbackScope: this, loop: true });
     
 }
 let spells_Pressed = [false,false,false,false];
@@ -126,6 +128,8 @@ function update ()
     myInterface.updateManaBar();
     myInterface.updateHealthBar();
     //myMainMan.rechargeMana();
+
+    dash_The_Lad();
 
     casting_Spells(this);
 

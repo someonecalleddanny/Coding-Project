@@ -7,8 +7,6 @@ class MainMan
         dead : false,
     }
 
-    
-
     lose_health()
     {
 

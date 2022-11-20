@@ -1,6 +1,13 @@
 //global changeable speed of x and y for the mc
-let xMovement = 80;
-let yMovement = 80;
+const defaultMovement = 80;
+let xMovement = defaultMovement;
+let yMovement = defaultMovement;
+
+//Changeable dash variables
+let dashMultiplier = 3;
+let dashMinuser = 0.1;
+let dashCost = 10;
+let currentlyDashing = false;
 
 //global variables to check if a player is moving diagonally
 let currentDiagonal = 0;
@@ -130,6 +137,90 @@ function moveTheLad(player)
             else
             {
                 return false;
+            }
+        }
+
+        function dash_The_Lad()
+        {
+            /*if(xMovement > defaultMovement)
+            {
+                xMovement -= dashMinuser;
+            }
+            if(yMovement > defaultMovement)
+            {
+                yMovement -= dashMinuser;
+            }*/
+            
+
+            if (keyShift.isDown && myMainMan.extraStats.mana - dashCost > -1)// Phaser.Input.Keyboard.JustDown(keyShift)
+            {
+                console.log("Dashing");
+                switch(direction_Moving())
+                {
+                    case "right":
+                        player.setVelocityX((xMovement * dashMultiplier))
+                        //xMovement = defaultMovement * dashMultiplier;
+                        //myMainMan.extraStats.mana -= dashCost;
+                        currentlyDashing = true;
+                        diagonalDashing();
+                        break;
+
+                    case "left":
+                        //xMovement = (defaultMovement * dashMultiplier);
+                        player.setVelocityX(-(xMovement * dashMultiplier))
+                        //myMainMan.extraStats.mana -= dashCost;
+                        currentlyDashing = true;
+                        diagonalDashing();
+                        break;
+
+                    case "up":
+                        player.setVelocityY(-(yMovement * dashMultiplier));
+                        currentlyDashing = true;
+                        //yMovement = (defaultMovement * dashMultiplier);
+                        //myMainMan.extraStats.mana -= dashCost;
+                        break;
+
+                    case "down":
+                        player.setVelocityY((yMovement * dashMultiplier))
+                        currentlyDashing = true;
+                        //yMovement = defaultMovement * dashMultiplier
+                        //myMainMan.extraStats.mana -= dashCost;
+                        break;
+                }
+
+                if(dashMultiplier > 1)
+                {
+                    dashMultiplier -= dashMinuser;
+                }
+
+                function diagonalDashing()
+                {
+                    //see the currentDiagonal variable in the PlayerMovement script
+                    if(currentDiagonal == 1)
+                    {
+                        //yMovement = (defaultMovement * dashMultiplier);
+                        player.setVelocityY(-(yMovement * dashMultiplier));
+                    }
+                    else if(currentDiagonal == 2)
+                    {
+                        //yMovement = (defaultMovement * dashMultiplier);
+                        player.setVelocityY((yMovement * dashMultiplier));
+                    }
+                    else
+                    {
+                        player.setVelocityY(0);
+                    }
+                }
+                
+            }
+            else
+            {
+                if(currentlyDashing)
+                {
+                    myMainMan.extraStats.mana -= dashCost;
+                    currentlyDashing = false;
+                }
+                dashMultiplier = 3;
             }
         }
 
