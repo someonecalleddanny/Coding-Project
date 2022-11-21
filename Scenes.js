@@ -2,7 +2,9 @@ class Scene_Play
 {
     create_Scene(game)
     {
+        //In RunningImages.js
         createTheBackground(game)
+        //game.add.image(0, 0, 'grass').setScale(2.5,2);
         //const text = game.add.text(350, 270, 'ppoooppp', { font: '16px Courier', fill: '#00ff00' });
 
         //intialising the interface bars for the player to see
@@ -96,5 +98,24 @@ class Scene_Title
     create_Scene(game)
     {
         myInterface.display_All_Title_Screen_Interface(game);
+
+        keyP = game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+
+        keyI = game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);
+    }
+
+    update_Scene(game)
+    {
+        if(Phaser.Input.Keyboard.JustDown(keyP))
+        {
+            console.log("hello");
+            //play_Scene.create_Scene(this);
+            //play_Scene.update_Scene(this)
+            game.scene.pause(game.scene);
+            game.scene.restart(game.scene);
+            isTitle = true;
+            init();
+            //create();
+        }
     }
 }

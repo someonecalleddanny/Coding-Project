@@ -33,7 +33,14 @@ function preLoadAllStuff(game)
     //loading the mana star
     game.load.image("manaStar", 'assets/manaStar.png');
 }
+
 function createTheBackground(game)
 {
     game.add.image(0, 0, 'grass').setScale(2.5,2);
+}
+
+function show_Funny_Zombies(game)
+{
+    game.add.image(60,75, "firezombie").setScale(2.5,2);
+    game.add.image(740,75, "earthzombie").setScale(2.5,2);
 }

@@ -72,14 +72,21 @@ class Interface
 
     display_All_Title_Screen_Interface(game)
     {
-        titleText = game.add.text(120, 20, ' Zombie Killer \nBOOM BOOM!', {font: "80px comic sans"});
+        titleText = game.add.text(140, 20, ' Zombie Killer \nBOOM BOOM!', {font: "80px comic sans"});
 
-        startGame = game.add.text(200, 300, 'Press: "P" To Kill And Boom ', { font: '30px comic sans'});
+        startGame = game.add.text(220, 300, 'Press: "P" To Kill And Boom ', { font: '30px comic sans'});
 
-        instruction = game.add.text(222, 350, 'Press: "I" For Instructions ', { font: '30px comic sans'});
+        instruction = game.add.text(242, 350, 'Press: "I" For Instructions ', { font: '30px comic sans'});
 
-        funnyJokeText = game.add.text(222, 350, 'No Quitting', { font: '30px comic sans'});
+        funnyJokeText = game.add.text(260, 400, 'Quitting Not Supported', { font: '30px comic sans'});
 
+        show_Funny_Zombies(game);
+
+    }
+
+    update_All_Title_Screen_Interface(game)
+    {
+        
     }
 
         

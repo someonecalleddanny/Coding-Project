@@ -63,6 +63,10 @@ let keyS;
 let keyD;
 let keyW;
 
+//Interface Keys
+let keyP;
+let keyI;
+
 //all the keys
 let key1;
 let key2;
@@ -75,8 +79,8 @@ let myGameManager = new GameManager();
 let myMainMan = new MainMan();
 let myInterface = new Interface();
 let myManaStar = new manaStar();
-let myScene_Play = new Scene_Play();
-let myScene_Title = new Scene_Title();
+let play_Scene = new Scene_Play();
+let title_Scene = new Scene_Title();
 
 //global array that checks which spell is pressed. Used in many scripts
 let spells_Pressed = [false,false,false,false];
@@ -100,6 +104,7 @@ let currentRound = 1;
 let timedEvent;
 let damagingPlayer;
 let Healing_Over_Time;
+
 let isTitle = true;
 
 function preload ()
@@ -110,22 +115,23 @@ function preload ()
 
 function init()
 {
-zombies = [];
+    isTitle = false;
+    zombies = [];
 
-//Misc Stuff
-mana_Stars_In_Game = [];
+    //Misc Stuff
+    mana_Stars_In_Game = [];
 
-//Instantiating classes
-myGameManager = new GameManager();
-myMainMan = new MainMan();
-myInterface = new Interface();
-myManaStar = new manaStar();
+    //Instantiating classes
+    myGameManager = new GameManager();
+    myMainMan = new MainMan();
+    myInterface = new Interface();
+    myManaStar = new manaStar();
 
-currentRound = 1;
+    currentRound = 1;
 
-//global array that checks which spell is pressed. Used in many scripts
-spells_Pressed = [false,false,false,false];
-mySpells = new Spells();
+    //global array that checks which spell is pressed. Used in many scripts
+    spells_Pressed = [false,false,false,false];
+    mySpells = new Spells();
 
 }
 
@@ -133,23 +139,26 @@ function create ()
 {
     if(isTitle)
     {
-        myScene_Title.create_Scene(this);
+       title_Scene.create_Scene(this);
     }
     else
     {
-        myScene_Play.create_Scene(this);
+       console.log("I am here");
+       //this.add.image(0, 0, 'grass').setScale(2.5,2);
+       play_Scene.create_Scene(this);
+
     }
 }
 
 function update ()
 {
-    if(isTitle)
+    if(!isTitle)
     {
-
+        play_Scene.update_Scene(this);
     }
     else
     {
-        myScene_Play.update_Scene(this)
+        title_Scene.update_Scene(this);
     }
     
 }
