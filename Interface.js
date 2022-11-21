@@ -69,4 +69,9 @@ class Interface
         //Holds data held within the managingZombies object which is held within the "GameManager.js"
         zombieBar.setText("Zombies: " + myGameManager.managingZombies.alive_Zombies);
     }
+
+    displaystartGame(game)
+    {
+        startGame = 
+    }
 }

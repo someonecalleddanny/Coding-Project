@@ -76,6 +76,7 @@ let myMainMan = new MainMan();
 let myInterface = new Interface();
 let myManaStar = new manaStar();
 let myScene_Play = new Scene_Play();
+let myScene_Title = new Scene_Title();
 
 //global array that checks which spell is pressed. Used in many scripts
 let spells_Pressed = [false,false,false,false];
@@ -86,6 +87,9 @@ let manaBar;
 let healthBar;
 let roundBar;
 let zombieBar;
+
+let startGame;
+let instruction;
 
 //this is used for the round bar
 let currentRound = 1;
@@ -127,7 +131,7 @@ function create ()
 {
     if (isTitle)
     {
-
+        myScene_Title.create_Scene(this);
     }
     else
     {

@@ -94,4 +94,7 @@ class Scene_Play
 class Scene_Title
 {
     create_Scene(game)
+    {
+        
+    }
 }
