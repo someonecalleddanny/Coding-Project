@@ -17,6 +17,7 @@
     <script src = "GameManagerFunctions.js"></script>
     <script src = "Interface.js"></script>
     <script src = "GameManager.js"></script>
+    <script src = "Scenes.js"></script>
     <style type="text/css">
         body {
             margin: 0;
@@ -46,6 +47,8 @@
     };  
 var game = new Phaser.Game(config);
 
+let gameOver = false;
+
 //characters
 var player;
 var zombies = [];
@@ -54,6 +57,7 @@ var zombies = [];
 var mana_Stars_In_Game = [];
 
 //all the keys
+let cursors;
 let keyA;
 let keyS;
 let keyD;
@@ -64,13 +68,14 @@ let key1;
 let key2;
 let key3;
 let key4;
-let keySpace;
+let keyShift;
 
 //Instantiating classes
 let myGameManager = new GameManager();
 let myMainMan = new MainMan();
 let myInterface = new Interface();
 let myManaStar = new manaStar();
+let myScene_Play = new Scene_Play();
 
 //global array that checks which spell is pressed. Used in many scripts
 let spells_Pressed = [false,false,false,false];
@@ -89,6 +94,7 @@ let currentRound = 1;
 let timedEvent;
 let damagingPlayer;
 let Healing_Over_Time;
+let isTitle = false;
 
 function preload ()
 {
@@ -96,91 +102,50 @@ function preload ()
     preLoadAllStuff(this)
 }
 
+function init()
+{
+zombies = [];
+
+//Misc Stuff
+mana_Stars_In_Game = [];
+
+//Instantiating classes
+myGameManager = new GameManager();
+myMainMan = new MainMan();
+myInterface = new Interface();
+myManaStar = new manaStar();
+
+currentRound = 1;
+
+//global array that checks which spell is pressed. Used in many scripts
+spells_Pressed = [false,false,false,false];
+mySpells = new Spells();
+
+}
+
 function create ()
 {
-    createTheBackground(this)
-    //const text = this.add.text(350, 270, 'ppoooppp', { font: '16px Courier', fill: '#00ff00' });
+    if (isTitle)
+    {
 
-    //intialising the interface bars for the player to see
-    myInterface.displayManaBar(this);
-    myInterface.displayHealthBar(this);
-    myInterface.displayRoundBar(this);
-    myInterface.displayZombieBar(this)
-
-    //movement keys
-    keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-    keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-    keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-    keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-
-    //selection of spells keys
-    key1 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
-    key2 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
-    key3 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
-    key4 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
-    keyShift = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
-
-    //dude
-    player = this.physics.add.sprite(100, 450, 'dude');
-    player.setCollideWorldBounds(true);
-    
-    //create the animation for the playable character
-    mcAnim(this);
-
-    //create the animation for the zombie. This applies to every zombie that i make.
-    zombie_Movement(this);
-    
-    //create the cursors on the keyboard to be able to be inputted
-    cursors = this.input.keyboard.createCursorKeys();
-
-    //These are the timed events that keep looping functions every set interval
-    //This recharges the mana every 1.5s. Calls the rechargeMana function which is in the "MainCharacter.js" file
-    timedEvent = this.time.addEvent({ delay: 1500, callback: rechargeMana,args:[myMainMan], callbackScope: this, loop: true });
-    //damages the player when he/she is hit, checks every second. Calls the damagePlayer function in "GameManagerFunctions.js"
-    damagingPlayer = this.time.addEvent({ delay: 1000, callback: damagePlayer,args:[myGameManager], callbackScope: this, loop: true });
-    /*heals the player every 10 seconds. Calls the rechargeHealth function which is in the "MainCharacter.js" file*/
-    Healing_Over_Time = this.time.addEvent({ delay: 10000, callback: rechargeHealth,args:[myMainMan], callbackScope: this, loop: true });
-    
+    }
+    else
+    {
+        myScene_Play.create_Scene(this);
+    }
 }
 
 function update ()
 {
-    //move the player with wasd and cursor keys. Check the PlayerMovement.js file for more info on how this works
-    moveTheLad(player); 
-
-    //checks if the zombies are dead to respawn them.
-    myGameManager.spawning_And_Killing_Zombos(this.physics, Phaser.Math.RND, myGameManager);
-
-    //If all the zombies the zombies are still alive
-    if(!myGameManager.managingZombies.all_Zombies_Dead)
+    if(isTitle)
     {
-        //Does the method in the GameManager class
-        myGameManager.zombie_Stuff(this.physics);
+
     }
-
-    //constantly updates the interface bars 
-    myInterface.updateManaBar();
-    myInterface.updateHealthBar();
-    myInterface.updateRoundBar();
-    myInterface.updateZombieBar();
-    //myMainMan.rechargeMana();
-
-
-    myGameManager.collecting_Stars(this.physics);
+    else
+    {
+        myScene_Play.update_Scene(this)
+    }
     
-    //Allows the mc to dash this is in the "PlayerMovement.js" file
-    dash_The_Lad();
-
-    //allows the player to cast the spells. This is in "Spells.js"
-    casting_Spells(this);
-
-    //the old moving script which is cool and complex but most likely 0.1% less efficient than the moveTheLad()
-    //var moveyGroovy = new imNotSeeingEnoughMovement(player);
-
-    if(myMainMan.extraStats.health < 0)
-    {
-        return;
-    }
 }
 </script> 
 </body>
