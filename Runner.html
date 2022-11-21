@@ -88,8 +88,10 @@ let healthBar;
 let roundBar;
 let zombieBar;
 
+let titleText;
 let startGame;
 let instruction;
+let funnyJokeText;
 
 //this is used for the round bar
 let currentRound = 1;
@@ -98,7 +100,7 @@ let currentRound = 1;
 let timedEvent;
 let damagingPlayer;
 let Healing_Over_Time;
-let isTitle = false;
+let isTitle = true;
 
 function preload ()
 {
@@ -129,7 +131,7 @@ mySpells = new Spells();
 
 function create ()
 {
-    if (isTitle)
+    if(isTitle)
     {
         myScene_Title.create_Scene(this);
     }

@@ -95,6 +95,6 @@ class Scene_Title
 {
     create_Scene(game)
     {
-        
+        myInterface.display_All_Title_Screen_Interface(game);
     }
 }
