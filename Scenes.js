@@ -95,6 +95,7 @@ class Scene_Play
 
 class Scene_Title
 {
+    instructionScreen = false;
     create_Scene(game)
     {
         myInterface.display_All_Title_Screen_Interface(game);
@@ -108,6 +109,10 @@ class Scene_Title
     {
         if(Phaser.Input.Keyboard.JustDown(keyP))
         {
+            itzame.destroy(true);
+            mario.destroy(true);
+            game.textures.remove(itzame);
+            game.textures.remove(mario);
             console.log("hello");
             //play_Scene.create_Scene(this);
             //play_Scene.update_Scene(this)
@@ -116,6 +121,15 @@ class Scene_Title
             isTitle = true;
             init();
             //create();
+        }
+
+        if(Phaser.Input.Keyboard.JustDown(keyI))
+        {
+            itzame.destroy(true);
+            mario.destroy(true);
+            game.textures.remove(itzame);
+            game.textures.remove(mario);
+            myInterface.update_All_Title_Screen_Interface(game, this);
         }
     }
 }

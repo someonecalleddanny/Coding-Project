@@ -41,6 +41,6 @@ function createTheBackground(game)
 
 function show_Funny_Zombies(game)
 {
-    game.add.image(60,75, "firezombie").setScale(2.5,2);
-    game.add.image(740,75, "earthzombie").setScale(2.5,2);
+    itzame = game.add.image(60,75, "firezombie").setScale(2.5,2);
+    mario = game.add.image(740,75, "earthzombie").setScale(2.5,2);
 }

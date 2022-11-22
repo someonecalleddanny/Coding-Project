@@ -80,13 +80,43 @@ class Interface
 
         funnyJokeText = game.add.text(260, 400, 'Quitting Not Supported', { font: '30px comic sans'});
 
+        helping_Player = game.add.text(20, 20, 
+            'Instructions:\nMovement: \"wasd\" OR cursor keys\n\nShooting Spells: Basic = 1, Fire = 2, Electric = 3, Earth = 4'
+            +"\n\nHow To Shoot: Aim with Movement\n"
+             + "+ Hold down the desired spell \n\n Mage Dash: \"Shift Button\" + aim with Movement" 
+            +"", 
+            { font: '30px comic sans'});
+            
+        helping_Player.setVisible(false);
+        helping_Player.setAlign("center");
+
         show_Funny_Zombies(game);
 
     }
 
-    update_All_Title_Screen_Interface(game)
+    update_All_Title_Screen_Interface(game, daScene)
     {
-        
+        if(!daScene.instructionScreen)
+        {
+            titleText.setVisible(false);
+            startGame.setVisible(false);
+            instruction.setVisible(false);
+            funnyJokeText.setVisible(false);
+            helping_Player.setVisible(true);
+            daScene.instructionScreen = true;
+        }
+
+        else if(daScene.instructionScreen)
+        {
+            titleText.setVisible(true);
+            startGame.setVisible(true);
+            instruction.setVisible(true);
+            funnyJokeText.setVisible(true);
+            helping_Player.setVisible(false);
+            daScene.instructionScreen = false;
+            show_Funny_Zombies(game);
+        }
+
     }
 
         
