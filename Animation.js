@@ -57,3 +57,13 @@ function zombie_Movement(zomAnim)
     });
 
 }
+
+function skill_Issue(noSkillAnim)
+{
+    noSkillAnim.anims.create({
+        key: 'takel',
+        frames: noSkillAnim.anims.generateFrameNumbers('l', { start: 0, end: 7 }),
+        frameRate: 12,
+        repeat: 1
+    });
+}

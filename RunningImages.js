@@ -32,6 +32,10 @@ function preLoadAllStuff(game)
 
     //loading the mana star
     game.load.image("manaStar", 'assets/manaStar.png');
+
+    //loading funny game over 
+    game.load.spritesheet("l", "assets/take-the-l.png", { frameWidth: 220 , frameHeight: 215});
+
 }
 
 function createTheBackground(game)
@@ -39,8 +43,20 @@ function createTheBackground(game)
     game.add.image(0, 0, 'grass').setScale(2.5,2);
 }
 
-function show_Funny_Zombies(game)
+function show_Funny_Zombies(game, showing_Title_Zombies)
 {
-    itzame = game.add.image(60,75, "firezombie").setScale(2.5,2);
-    mario = game.add.image(740,75, "earthzombie").setScale(2.5,2);
+    if(showing_Title_Zombies)
+    {
+        itzame = game.add.image(60,75, "firezombie").setScale(2.5,2);
+        mario = game.add.image(740,75, "earthzombie").setScale(2.5,2);
+    }
+    else
+    {
+        waaaa = game.add.image(740,550, "firezombie").setScale(2.5,2);
+    }
+}
+
+function lDance(game)
+{
+    skullTrooper = game.physics.add.sprite(395 ,230 ,"l")
 }

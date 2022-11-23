@@ -88,7 +88,9 @@ class Scene_Play
             //game.paused = true;
             game.scene.pause(game.scene);
             game.scene.restart(game.scene);
-            init();
+            isTitle = false;
+            gameOver = true;
+            //init();
         }
     }
 }
@@ -113,12 +115,19 @@ class Scene_Title
             mario.destroy(true);
             game.textures.remove(itzame);
             game.textures.remove(mario);
+
+            if(this.instructionScreen)
+            {
+                waaaa.destroy(true);
+                game.textures.remove(waaaa);
+            }
+            
             console.log("hello");
             //play_Scene.create_Scene(this);
             //play_Scene.update_Scene(this)
             game.scene.pause(game.scene);
             game.scene.restart(game.scene);
-            isTitle = true;
+            isTitle = false;
             init();
             //create();
         }
@@ -130,6 +139,44 @@ class Scene_Title
             game.textures.remove(itzame);
             game.textures.remove(mario);
             myInterface.update_All_Title_Screen_Interface(game, this);
+        }
+    }
+}
+
+class Scene_game_Over
+{
+    create_Scene(game)
+    {
+        keyP = game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+        keyT = game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
+        myInterface.display_All_Game_Over_Screen_Interface(game);
+        skill_Issue(game)
+    }
+
+    update_Scene(game)
+    {
+        myInterface.update_All_Game_Over_Screen_Interface();
+        if(Phaser.Input.Keyboard.JustDown(keyT))
+        {
+            skullTrooper.destroy(skullTrooper);
+            game.textures.remove(skullTrooper);
+
+            game.scene.pause(game.scene);
+            game.scene.restart(game.scene);
+            gameOver = false;
+            isTitle = true;
+            //init();
+        }
+        else if(Phaser.Input.Keyboard.JustDown(keyP))
+        {
+            skullTrooper.destroy(skullTrooper);
+            game.textures.remove(skullTrooper);
+
+            game.scene.pause(game.scene);
+            game.scene.restart(game.scene);
+            gameOver = false;
+            isTitle = false;
+            init();
         }
     }
 }

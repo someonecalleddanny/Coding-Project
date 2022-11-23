@@ -82,15 +82,15 @@ class Interface
 
         helping_Player = game.add.text(20, 20, 
             'Instructions:\nMovement: \"wasd\" OR cursor keys\n\nShooting Spells: Basic = 1, Fire = 2, Electric = 3, Earth = 4'
-            +"\n\nHow To Shoot: Aim with Movement\n"
-             + "+ Hold down the desired spell \n\n Mage Dash: \"Shift Button\" + aim with Movement" 
-            +"", 
+            +"\n\nHow To Shoot: Aim with Movement\n+ Hold down the desired spell \n\n Mage Dash: \"Shift Button\" + aim with Movement\n\nResistances: Certain zombies are resistant to particular spells\n"
+            +"For example, a blue looking spell cannot damage\na blue looking zombie\n\n\"I\" to return OR \"P\" TO BOOM"
+             , 
             { font: '30px comic sans'});
-            
+
         helping_Player.setVisible(false);
         helping_Player.setAlign("center");
 
-        show_Funny_Zombies(game);
+        show_Funny_Zombies(game, true);
 
     }
 
@@ -104,6 +104,7 @@ class Interface
             funnyJokeText.setVisible(false);
             helping_Player.setVisible(true);
             daScene.instructionScreen = true;
+            show_Funny_Zombies(game, false);
         }
 
         else if(daScene.instructionScreen)
@@ -114,10 +115,32 @@ class Interface
             funnyJokeText.setVisible(true);
             helping_Player.setVisible(false);
             daScene.instructionScreen = false;
-            show_Funny_Zombies(game);
+
+            waaaa.destroy(true);
+            game.textures.remove(waaaa);
+
+            show_Funny_Zombies(game, true);
         }
 
     }
+
+    display_All_Game_Over_Screen_Interface(game)
+    {
+        titleText = game.add.text(230, 20, 'WASTED', {font: "80px comic sans"});
+
+        instruction = game.add.text(55, 400, 'Press: "T" To go to TITLE OR Press: "P" To RESTART', { font: '30px comic sans'});
+
+        titleText.setFill("red");
+        titleText.setAlign("center");
+        lDance(game);
+    }
+
+    update_All_Game_Over_Screen_Interface()
+    {
+        skullTrooper.anims.play("takel", true);
+    }
+
+
 
         
 }
