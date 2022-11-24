@@ -21,6 +21,7 @@ function rechargeHealth(mc)
     console.log(mc.extraStats.health);
 }
 
+//same as above but different interval 
 function rechargeMana(mc)
 {
     mc.extraStats.mana += 10;

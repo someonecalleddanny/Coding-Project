@@ -58,6 +58,7 @@ function zombie_Movement(zomAnim)
 
 }
 
+//animation for the game over screen
 function skill_Issue(noSkillAnim)
 {
     noSkillAnim.anims.create({
