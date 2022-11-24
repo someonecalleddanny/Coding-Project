@@ -1,5 +1,6 @@
 var currentBackground;
 
+//preloads all the assets. Called in the preload function in the runner
 function preLoadAllStuff(game)
 {
     //currentBackground = 'grass';
@@ -37,12 +38,13 @@ function preLoadAllStuff(game)
     game.load.spritesheet("l", "assets/take-the-l.png", { frameWidth: 220 , frameHeight: 215});
 
 }
-
+//Create the relevant background for the player to liven up the place
 function createTheBackground(game)
 {
     game.add.image(0, 0, 'grass').setScale(2.5,2);
 }
 
+//show zombies on the title screen as well as the instruction screen
 function show_Funny_Zombies(game, showing_Title_Zombies)
 {
     if(showing_Title_Zombies)
@@ -56,6 +58,7 @@ function show_Funny_Zombies(game, showing_Title_Zombies)
     }
 }
 
+//create the relevant sprite object for the game over screen
 function lDance(game)
 {
     skullTrooper = game.physics.add.sprite(395 ,230 ,"l")

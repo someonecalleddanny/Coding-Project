@@ -83,9 +83,12 @@ class Scene_Play
         //the old moving script which is cool and complex but most likely 0.1% less efficient than the moveTheLad()
         //var moveyGroovy = new imNotSeeingEnoughMovement(player);
 
+        //When the player dies
         if(myMainMan.extraStats.health <= 0)
         {
             //game.paused = true;
+
+            //The scene restarts to show the game over screen
             game.scene.pause(game.scene);
             game.scene.restart(game.scene);
             isTitle = false;
@@ -97,25 +100,33 @@ class Scene_Play
 
 class Scene_Title
 {
+    //This boolean is responsible for showing the instruction screen
     instructionScreen = false;
+    //this method is called in the create function in the runner
     create_Scene(game)
     {
+        //This method is in the "Interface.js" file
         myInterface.display_All_Title_Screen_Interface(game);
 
+        //initializing the relevant keys for this scene
         keyP = game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
 
         keyI = game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);
     }
 
+    //this method is called in the update funtion in the runner
     update_Scene(game)
     {
+        //Checks when the key p is pressed
         if(Phaser.Input.Keyboard.JustDown(keyP))
         {
+            //Destroy the relevant sprites in order to preserve optimization of the programme
             itzame.destroy(true);
             mario.destroy(true);
             game.textures.remove(itzame);
             game.textures.remove(mario);
 
+            //Use this if because the player is able to press play in the instruction screen
             if(this.instructionScreen)
             {
                 waaaa.destroy(true);
@@ -125,6 +136,8 @@ class Scene_Title
             console.log("hello");
             //play_Scene.create_Scene(this);
             //play_Scene.update_Scene(this)
+
+            //restart the scene and let the player play the game
             game.scene.pause(game.scene);
             game.scene.restart(game.scene);
             isTitle = false;
@@ -132,12 +145,16 @@ class Scene_Title
             //create();
         }
 
+        //Pressing I will result in the instruction screen to be shown
         if(Phaser.Input.Keyboard.JustDown(keyI))
         {
+            //destroy the relevant sprites in the title screen
             itzame.destroy(true);
             mario.destroy(true);
             game.textures.remove(itzame);
             game.textures.remove(mario);
+
+            //Call a method which is stored in "Interface.js"
             myInterface.update_All_Title_Screen_Interface(game, this);
         }
     }
@@ -145,22 +162,31 @@ class Scene_Title
 
 class Scene_game_Over
 {
+    //this method is called in the create function in the runner
     create_Scene(game)
     {
+        //create relevant keys to be made 
         keyP = game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
         keyT = game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
+
+        //method in "Interface.js"
         myInterface.display_All_Game_Over_Screen_Interface(game);
+        //This calls a function in the "RunningImages.js" file
         skill_Issue(game)
     }
-
+    //this method is called in the update function in the runner
     update_Scene(game)
     {
+        //calls method in the "Interface.js" file
         myInterface.update_All_Game_Over_Screen_Interface();
+        //if t is pressed
         if(Phaser.Input.Keyboard.JustDown(keyT))
         {
+            //destroy the relevant sprite
             skullTrooper.destroy(skullTrooper);
             game.textures.remove(skullTrooper);
 
+            //return the player to the title screen
             game.scene.pause(game.scene);
             game.scene.restart(game.scene);
             gameOver = false;
@@ -169,9 +195,11 @@ class Scene_game_Over
         }
         else if(Phaser.Input.Keyboard.JustDown(keyP))
         {
+            //same explanation as above
             skullTrooper.destroy(skullTrooper);
             game.textures.remove(skullTrooper);
 
+            //returns the player back into the game
             game.scene.pause(game.scene);
             game.scene.restart(game.scene);
             gameOver = false;

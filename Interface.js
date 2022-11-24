@@ -16,6 +16,8 @@ class Interface
     {
         //Uses the data held within the extraStats object which is held within "MainCharacter.js"
         manaBar.setText("Mana: " + myMainMan.extraStats.mana)
+
+        //Makes sure that the mana can never go below 0 when showing it to the player
         if(myMainMan.extraStats.mana < 0)
         {
             manaBar.setText("Mana: " + "0")
@@ -34,6 +36,8 @@ class Interface
     updateHealthBar()
     {
         healthBar.setText("Health: " + myMainMan.extraStats.health)
+
+        //same explanation as the manabar
         if(myMainMan.extraStats.health < 0)
         {
             healthBar.setText("Health: " + "0")
@@ -57,6 +61,7 @@ class Interface
 
     displayZombieBar(game)
     {
+        //create the relevant text object
         zombieBar = game.add.text(600, 0, 'Zombies: ', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif'});
         zombieBar.setFill("black");
         zombieBar.setScale(2,2);
@@ -70,6 +75,7 @@ class Interface
         zombieBar.setText("Zombies: " + myGameManager.managingZombies.alive_Zombies);
     }
 
+    //Mostly displays text for the player
     display_All_Title_Screen_Interface(game)
     {
         titleText = game.add.text(140, 20, ' Zombie Killer \nBOOM BOOM!', {font: "80px comic sans"});
@@ -90,25 +96,36 @@ class Interface
         helping_Player.setVisible(false);
         helping_Player.setAlign("center");
 
+        //shows the zombies on screen passing true means that the player is currently on the title screen. In "RunningImages.js"
         show_Funny_Zombies(game, true);
 
     }
-
+    //updates between the title and instruction screen daScene is an instance of the Scene_Title
     update_All_Title_Screen_Interface(game, daScene)
     {
+        //Remember that instructionScreen is a property of the daScene class
+
+        //So if not in the title screen
         if(!daScene.instructionScreen)
         {
+            //hide unecessary text objects and show the relevant one
             titleText.setVisible(false);
             startGame.setVisible(false);
             instruction.setVisible(false);
             funnyJokeText.setVisible(false);
             helping_Player.setVisible(true);
             daScene.instructionScreen = true;
+
+            //Shows the funny zombie, pass false to show that the player is in the instruction screen
+
+            //IMPORTANT: use this placement for my questionnaire to see if the ppts actually used the instructions
             show_Funny_Zombies(game, false);
         }
 
+        //If the player is in the title screen
         else if(daScene.instructionScreen)
         {
+            //same explanation as above
             titleText.setVisible(true);
             startGame.setVisible(true);
             instruction.setVisible(true);
@@ -118,12 +135,13 @@ class Interface
 
             waaaa.destroy(true);
             game.textures.remove(waaaa);
-
+            //show the relevant title zombies
             show_Funny_Zombies(game, true);
         }
 
     }
 
+    //Mostly displays text on the screen for the player
     display_All_Game_Over_Screen_Interface(game)
     {
         titleText = game.add.text(230, 20, 'WASTED', {font: "80px comic sans"});
@@ -132,9 +150,11 @@ class Interface
 
         titleText.setFill("red");
         titleText.setAlign("center");
+        //creates the sprite which is held in the "RunningImages.js" file
         lDance(game);
     }
 
+    //Plays the animation for the sprite which is held within "Animation.js"
     update_All_Game_Over_Screen_Interface()
     {
         skullTrooper.anims.play("takel", true);

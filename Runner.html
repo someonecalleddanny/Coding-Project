@@ -119,6 +119,7 @@ function preload ()
     preLoadAllStuff(this)
 }
 
+//When this function is called, it initializes all the necessary variables for the game to start
 function init()
 {
     //isTitle = false;
@@ -143,14 +144,18 @@ function init()
 
 function create ()
 {
+    //When the player dies the gameOver boolean will turn true which will run this scene
     if(gameOver)
     {
         game_Over_Scene.create_Scene(this);
     }
+    //If the isTitle boolean is true, which is normally when the game is first started or when the player chooses to go back to the title,
+    //The title scene is created
     else if(isTitle)
     {
        title_Scene.create_Scene(this);
     }
+    //This plays the actual game
     else
     {
        console.log("I am here");
@@ -162,6 +167,7 @@ function create ()
 
 function update ()
 {
+    //Same explanation as above in the create() function
     if(gameOver)
     {
         game_Over_Scene.update_Scene(this);

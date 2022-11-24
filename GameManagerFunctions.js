@@ -116,23 +116,31 @@ function damagePlayer(Managing)
 
 function setting_Random_Starting_Positions(math, manager)
 {
+    //the decider checks if the x or y position will be held in two fixed locations
     let decider = math.between(0,1);
+    //the x will be in a fixed location either on the left of the screen or right
     if(decider == 0) 
     {
         manager.managingZombies.start_X = math.pick([-10,810]);
+        //The y position can vary
         manager.managingZombies.start_Y = math.between(-5, 605);
     }
+    //the y position will either be fixed on the top of the screen or the bottom
     else
     {
         manager.managingZombies.start_Y = math.pick([-10,610]);
+        //the x position can vary
         manager.managingZombies.start_X = math.between(-5, 805);
     }
 }
 
+//called when a zombie is killed
 function spawn_manaStar_On_Body(myZombie, math, physics)
 {
     let placement_Star = new manaStar();
     mana_Stars_In_Game.push(placement_Star);
+    //This is a faster way of indexing the relevant star as there can be many on screen
+    //Picks 1 of three mana values that the player can receive when picking the item up
     mana_Stars_In_Game[mana_Stars_In_Game.length - 1].stuff_Inside.manaHeld = math.pick([10,20,30]);
     mana_Stars_In_Game[mana_Stars_In_Game.length - 1].stuff_Inside.entity = physics.add.sprite(myZombie.x ,myZombie.y, "manaStar");
     //myManager.managingMana.spawned = true;

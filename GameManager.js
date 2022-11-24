@@ -82,6 +82,7 @@ class GameManager
                 //and remove it out of the array of the zombie_Man classes
                 if(this.managingZombies.all_Zombies[i].dead)
                 {
+                    //spawn a mana star on the body of the dead zombie, function held in "GameManagerFunctions.js"
                     spawn_manaStar_On_Body(this.managingZombies.all_Zombies[i].this_Exact_Zombie, math, physics);
                     this.managingZombies.all_Zombies[i].this_Exact_Zombie.destroy(true);
                     this.managingZombies.all_Zombies.splice(i,1);
@@ -154,10 +155,14 @@ class GameManager
         }
     }
 
+    //Stars are made in the spawning and killing of the zombies method
     collecting_Stars(physics)
     {
+        //global array that checks if there are more than 0 stars currently in the world
         if(mana_Stars_In_Game.length > 0)
         {
+            /*This whole for loop checks if the player overlaps with the specific mana star, gives a random amount of mana between
+            10 and 30, and then destroys the relevant object*/
             for(let i = 0 ; i < mana_Stars_In_Game.length ; i++)
             {
                 if(physics.overlap(player, mana_Stars_In_Game[i].stuff_Inside.entity))
@@ -165,10 +170,12 @@ class GameManager
                     console.log("mana before = " + myMainMan.extraStats.mana);
                     if(myMainMan.extraStats.mana < max_Mana - mana_Stars_In_Game[i].stuff_Inside.manaHeld)
                     {
+                        //This is the instance of the class that holds mana from 10 to 30 (Picked randomly)
                         myMainMan.extraStats.mana += mana_Stars_In_Game[i].stuff_Inside.manaHeld;
                     }
                     else
                     {
+                        //Doesnt allow the player to go over 200 mana
                         myMainMan.extraStats.mana = max_Mana;
                     }
                     mana_Stars_In_Game[i].stuff_Inside.entity.destroy(true);

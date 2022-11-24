@@ -10,6 +10,7 @@ class MainMan
     }
 }
 
+//This function keeps getting called by the timer that is held within the play_scene. Essentially recharges health every 10 secs
 function rechargeHealth(mc)
 {
     mc.extraStats.health += 15;
